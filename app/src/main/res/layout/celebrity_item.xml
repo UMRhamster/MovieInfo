@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/celebrity_item_iv"
+        android:layout_width="60dp"
+        android:layout_height="84dp"
+        android:src="@drawable/qwer"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"/>
+    <TextView
+        android:id="@+id/celebrity_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/celebrity_item_name_bg"
+        android:layout_alignStart="@id/celebrity_item_iv"
+        android:layout_alignEnd="@id/celebrity_item_iv"
+        android:layout_alignBottom="@id/celebrity_item_iv"
+        android:gravity="center"
+        android:text="姜文"
+        android:lines="1"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"/>
+    <TextView
+        android:id="@+id/celebrity_item_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/celebrity_item_iv"
+        android:layout_alignEnd="@id/celebrity_item_iv"
+        android:gravity="center"
+        android:text="演员"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:layout_below="@id/celebrity_item_name"/>
+</RelativeLayout>

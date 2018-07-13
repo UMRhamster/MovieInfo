@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MovieInfo</string>
+    <string name="hot">正在热映</string>
+    <string name="late">即将上映</string>
+    <string name="top">TOP250</string>
+    <string name="tickets">北美票房榜</string>
+    <string name="personal">个人中心</string>
+
+    <string name="rating_count">评论:%1$d</string>
+    <string name="wish_count">想看:%1$d</string>
+    <string name="collect_count">看过:%1$d</string>
+    <string name="year">上映时间:%1$s</string>
+    
+    <string name="hot_directors">导演：%1$s</string>
+    <string name="hot_year">年代：%1$s</string>
+    <string name="hot_genres">类型：%1$s</string>
+    <string name="hot_countries">制片地：%1$s</string>
+    <string name="hot_aka">又名：%1$s</string>
 </resources>

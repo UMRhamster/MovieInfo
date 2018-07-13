@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="themeGreenBlue">#40b9b0</color>
+    <color name="themePurple">#7c08d0</color>
+    <color name="themeDarkPurple">#6800B3</color>
+    <color name="whiteGray">#efefef</color>
+    <color name="tabTextColor">#8a8a8a</color>
 </resources>
