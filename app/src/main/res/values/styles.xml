@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/themeGreenBlue</item>
     </style>
 
+    <!--个人中心图表应用样式-->
+    <style name="personalImg">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!--个人中心文字应用样式-->
+    <style name="personalTv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:padding">14dp</item>
+    </style>
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.whut.umrhamster.movieinfo.activity.AboutActivity">
+    <TextView
+        android:id="@+id/ac_about_address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="项目地址："/>
+    <TextView
+        android:id="@+id/ac_about_address_content"
+        android:layout_below="@id/ac_about_address_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="https://github.com/UMRhamster/MovieInfo"/>
+    <TextView
+        android:id="@+id/ac_about_contact_title"
+        android:layout_below="@id/ac_about_address_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="联系我们："/>
+    <TextView
+        android:id="@+id/ac_about_contact_content"
+        android:layout_below="@id/ac_about_contact_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1242127559@qq.com"/>
+</RelativeLayout>

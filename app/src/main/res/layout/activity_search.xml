@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.whut.umrhamster.movieinfo.activity.SearchActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ac_search_tb"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/themeDarkPurple"
+        app:contentInsetStart="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/search_et_bg"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:id="@+id/ac_search_iv_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:src="@drawable/search_back"/>
+            <EditText
+                android:id="@+id/ac_search_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_toEndOf="@id/ac_search_iv_back"
+                android:layout_centerVertical="true"
+                android:hint=" 搜索内容"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:padding="4dp"
+                android:layout_toStartOf="@id/ac_search_ns"
+                android:textColor="@android:color/black"/>
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/ac_search_ns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_toStartOf="@id/ac_search_iv_search"
+                android:layout_centerVertical="true">
+            </org.angmarch.views.NiceSpinner>
+            <ImageView
+                android:id="@+id/ac_search_iv_search"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/search_search"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+</RelativeLayout>

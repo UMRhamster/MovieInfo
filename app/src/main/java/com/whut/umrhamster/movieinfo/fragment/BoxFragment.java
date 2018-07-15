@@ -24,32 +24,11 @@ import okhttp3.Response;
  */
 
 public class BoxFragment extends Fragment {
-    private ImageView imageView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_movie_detail,container,false);
-        imageView = view.findViewById(R.id.movie_detail_hot_bg_blur);
-        Picasso.get().load("http://img3.doubanio.com/view/photo/s_ratio_poster/public/p494268647.jpg")
-                .transform(new BlurTransformation(getActivity()))
-                .into(imageView);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                OkHttpClient okHttpClient = new OkHttpClient();
-//                Request request = new Request.Builder()
-//                        .url("http://api.douban.com/v2/movie/subject/1764796")
-//                        .build();
-//                Response response = null;
-//                try {
-//                    response = okHttpClient.newCall(request).execute();
-//                    String json = response.body().string();
-//                    MovieUtil.Json2Movie(json);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+        View view = inflater.inflate(R.layout.fragment_box,container,false);
+
         return view;
     }
 }

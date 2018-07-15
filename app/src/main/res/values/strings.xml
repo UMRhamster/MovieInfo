@@ -10,10 +10,12 @@
     <string name="wish_count">想看:%1$d</string>
     <string name="collect_count">看过:%1$d</string>
     <string name="year">上映时间:%1$s</string>
-    
+
     <string name="hot_directors">导演：%1$s</string>
     <string name="hot_year">年代：%1$s</string>
     <string name="hot_genres">类型：%1$s</string>
     <string name="hot_countries">制片地：%1$s</string>
     <string name="hot_aka">又名：%1$s</string>
+
+    <string name="review_movie">《%1$s》</string>
 </resources>

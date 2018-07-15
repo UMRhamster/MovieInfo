@@ -44,8 +44,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     private ImageView imageViewOut;         //外部连接
     private TextView textViewTBTile;        //导航栏上的标题
 
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout;      //用于添加演职人员
     private Context context;
+
+    //底部工具栏
+    private ImageView imageViewShouCang;
+    private TextView textViewShouCang;
+    private TextView textViewPinglun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewTBTile = findViewById(R.id.movie_detail_hot_tb_title);
 
         linearLayout = findViewById(R.id.movie_detail_hot_celebrities_hsv_ll);
+
+        imageViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang);
+        textViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang_tv);
+        textViewPinglun = findViewById(R.id.movie_detail_hot_tb_bottom_pinglun_tv);
     }
     private void initData(){
         movie = (Movie) getIntent().getSerializableExtra("movie");
@@ -95,6 +104,11 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         addCelebrityItem(movie.getDirectors(),"导演");
         addCelebrityItem(movie.getCasts(),"主演");
+
+        if (movie.getRating_count() > 0){
+            textViewPinglun.setText(movie.getRating_count());
+        }
+        //还需要判断是否收藏...
 
     }
     private void addCelebrityItem(List<Celebrity> celebrities, String job){

@@ -84,20 +84,21 @@ public class MovieUtil {
         for (int i=0;i<jsonArray.length();i++){
             Celebrity celebrityTemp = new Celebrity();
             try {
-                if (jsonArray.getJSONObject(i).getString("alt") == null){
+                if (jsonArray.getJSONObject(i).getString("alt").equals("null")){
                     celebrityTemp.setAlt("无");
+//                    Log.d("dasd","无");
                 }else {
                     celebrityTemp.setAlt(jsonArray.getJSONObject(i).getString("alt"));
                 }
 //                celebrityTemp.setAlt(jsonArray.getJSONObject(i).getString("alt"));
-                if (jsonArray.getJSONObject(i).getJSONObject("avatars") == null){
+                if (jsonArray.getJSONObject(i).getString("avatars").equals("null")){
                     celebrityTemp.setAvatars("无");
                 }else {
                     celebrityTemp.setAvatars(jsonArray.getJSONObject(i).getJSONObject("avatars").getString("small"));
                 }
 //                celebrityTemp.setAvatars(jsonArray.getJSONObject(i).getJSONObject("avatars").getString("small"));
                 celebrityTemp.setName(jsonArray.getJSONObject(i).getString("name"));
-                celebrityTemp.setId(jsonArray.getJSONObject(i).getInt("id"));
+//                celebrityTemp.setId(jsonArray.getJSONObject(i).getInt("id"));
                 celebrityList.add(celebrityTemp);
             } catch (JSONException e) {
                 e.printStackTrace();

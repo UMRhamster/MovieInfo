@@ -28,6 +28,8 @@ public class Movie extends LitePal implements Serializable{
     private List<Celebrity> directors;   //导演
     private List<Celebrity> casts;       //主演
 
+    public Movie(){}
+
     public String getId() {
         return id;
     }

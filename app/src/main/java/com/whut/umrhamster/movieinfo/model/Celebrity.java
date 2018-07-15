@@ -14,6 +14,10 @@ public class Celebrity extends LitePal implements Serializable{
     private String name;    //名字
     private int id;         //id
 
+    public Celebrity(){
+
+    }
+
     public String getAlt() {
         return alt;
     }

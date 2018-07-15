@@ -235,42 +235,6 @@
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/movie_detail_hot_renshu"
-                android:layout_below="@id/movie_detail_hot_celebrities_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="111"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/hot_pingfen_renshu"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="111"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/hot_xiangkan_renshu"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="111"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/hot_kanguo_renshu"/>
-                </LinearLayout>
-            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
     <android.support.v7.widget.Toolbar
@@ -282,28 +246,44 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp">
+            android:padding="8dp">
+            <ImageView
+                android:id="@+id/movie_detail_hot_tb_bottom_shoucang"
+                android:contentDescription="@null"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="30dp"
+                android:layout_toStartOf="@id/movie_detail_hot_tb_bottom_pinglun"
+                android:src="@drawable/movie_detail_shoucang"/>
             <TextView
+                android:id="@+id/movie_detail_hot_tb_bottom_shoucang_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:drawableTop="@drawable/hot_shoucang"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/movie_detail_hot_pinglun_btn"
+                android:layout_marginEnd="30dp"
+                android:layout_below="@id/movie_detail_hot_tb_bottom_shoucang"
+                android:layout_alignStart="@id/movie_detail_hot_tb_bottom_shoucang"
+                android:layout_toStartOf="@id/movie_detail_hot_tb_bottom_pinglun_tv"
                 android:gravity="center"
                 android:text="收藏"
-                android:textSize="12sp"/>
+                android:textSize="10sp"/>
+            <ImageView
+                android:id="@+id/movie_detail_hot_tb_bottom_pinglun"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/movie_detail_pinglun"/>
             <TextView
-                android:id="@+id/movie_detail_hot_pinglun_btn"
+                android:id="@+id/movie_detail_hot_tb_bottom_pinglun_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:drawableTop="@drawable/hot_pinglun"
-                android:layout_centerVertical="true"
+                android:layout_below="@id/movie_detail_hot_tb_bottom_pinglun"
+                android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignStart="@id/movie_detail_hot_tb_bottom_pinglun"
                 android:gravity="center"
                 android:text="评论"
-                android:textSize="12sp"/>
+                android:textSize="10sp"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </RelativeLayout>

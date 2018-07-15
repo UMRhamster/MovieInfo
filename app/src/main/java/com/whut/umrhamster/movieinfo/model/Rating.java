@@ -14,6 +14,9 @@ public class Rating extends LitePal implements Serializable{
     private int min;
     private float average;
 
+
+    public Rating(){}
+
     public int getId() {
         return id;
     }
