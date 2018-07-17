@@ -11,12 +11,12 @@ public class MovieSimple {
     private String id;             //id
     private String title;          //中文名
     private String year;           //年代
-    private String[] genres;       //影片类型
+    private String genres;       //影片类型
     private List<Celebrity> directors;   //导演
 
     public MovieSimple(){}
 
-    public MovieSimple(String title, String year, String[] genres, List<Celebrity> directors){
+    public MovieSimple(String title, String year, String genres, List<Celebrity> directors){
         this.title = title;
         this.year = year;
         this.genres = genres;
@@ -47,11 +47,11 @@ public class MovieSimple {
         this.year = year;
     }
 
-    public String[] getGenres() {
+    public String getGenres() {
         return genres;
     }
 
-    public void setGenres(String[] genres) {
+    public void setGenres(String genres) {
         this.genres = genres;
     }
 

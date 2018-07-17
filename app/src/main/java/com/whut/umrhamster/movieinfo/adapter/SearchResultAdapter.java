@@ -46,7 +46,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder)holder).textViewTitle.setText(simpleList.get(position).getTitle());
         ((ViewHolder)holder).textViewYear.setText(simpleList.get(position).getYear());
-        ((ViewHolder)holder).textViewGenres.setText(MovieUtil.Array2String(simpleList.get(position).getGenres()));
+        ((ViewHolder)holder).textViewGenres.setText(simpleList.get(position).getGenres());
         ((ViewHolder)holder).textViewDirectors.setText(CelebrityUtil.List2String(simpleList.get(position).getDirectors()));
         holder.itemView.setTag(position);
     }

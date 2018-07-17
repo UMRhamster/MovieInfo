@@ -34,10 +34,10 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.android.support:design:26.1.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    compile 'com.squareup.picasso:picasso:2.71828'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.arcadefire:nice-spinner:1.3.4'
     compile 'com.youth.banner:banner:1.4.10'  //最新版本
-    compile 'com.github.valuesfeng:androidpicturepicker:1.0.0'
+    compile 'com.zhihu.android:matisse:0.4.3'
 
 }

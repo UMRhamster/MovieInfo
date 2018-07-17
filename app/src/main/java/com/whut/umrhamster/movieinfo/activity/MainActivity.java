@@ -2,6 +2,7 @@ package com.whut.umrhamster.movieinfo.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Movie;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,8 @@ import com.whut.umrhamster.movieinfo.fragment.TopMovieFragment;
 import com.whut.umrhamster.movieinfo.fragment.HotMovieFragment;
 import com.whut.umrhamster.movieinfo.fragment.PersonalFragment;
 import com.whut.umrhamster.movieinfo.fragment.SoonMovieFragment;
+import com.whut.umrhamster.movieinfo.model.Celebrity;
+import com.whut.umrhamster.movieinfo.model.Rating;
 
 import org.litepal.LitePal;
 
@@ -28,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.Bmob;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.ac_main_vp)
@@ -52,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LitePal.initialize(this);   //初始化litepal
+        LitePal.deleteAll(Movie.class);
+        LitePal.deleteAll(Rating.class);
+        LitePal.deleteAll(Celebrity.class);
+        Bmob.initialize(this, "8ef4da5b5730f6c7c70dc08e9d6e6373");
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //取消半透明
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);

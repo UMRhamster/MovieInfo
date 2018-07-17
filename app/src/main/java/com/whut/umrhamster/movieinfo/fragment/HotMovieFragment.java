@@ -101,7 +101,7 @@ public class HotMovieFragment extends Fragment {
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
                 }
-                List<String> idList = HotMovieUtil.getHotMovies(hotJson);
+                List<String> idList = HotMovieUtil.getHotMovies(hotJson); //解析出id
                 int count = 0;
                 for (String id : idList){
                     String movieJson = HttpUtil.getMovieById(id);
@@ -115,34 +115,6 @@ public class HotMovieFragment extends Fragment {
                         });
                     }
                 }
-//                OkHttpClient okHttpClient = new OkHttpClient();
-//                Request request = new Request.Builder()
-//                        .url("http://api.douban.com/v2/movie/in_theaters")
-//                        .build();
-//                Response response = null;
-//                try {
-//                    response = okHttpClient.newCall(request).execute();
-//                    String json = response.body().string();
-//                    List<String> idList = HotMovieUtil.getHotMovies(json);
-//                    int count = 0; //计数 用于加载4个之后 再刷新显示
-//                    for (String id : idList){
-//                        Request request1 = new Request.Builder()
-//                                .url("http://api.douban.com/v2/movie/subject/"+id)
-//                                .build();
-//                        response = okHttpClient.newCall(request1).execute();
-//                        movieList.add(MovieUtil.Json2Movie(response.body().string()));
-//                        if (++count%4 == 0 || count == idList.size()){ //每加载四个之后进行界面刷新，或者加载到最后刷新
-//                            handler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    adapter.notifyDataSetChanged();
-//                                }
-//                            });
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
             }
         }).start();
     }

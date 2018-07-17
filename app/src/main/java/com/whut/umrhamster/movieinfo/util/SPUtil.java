@@ -29,5 +29,6 @@ public class SPUtil {
         saveData(context,"user","password",user.getPassword());
         saveData(context,"user","nickname",user.getNickname());
         saveData(context,"user","avatars",user.getAvatars());
+        saveData(context,"user","collection",user.getMovieCollected());
     }
 }

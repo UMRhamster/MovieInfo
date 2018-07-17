@@ -1,10 +1,7 @@
 package com.whut.umrhamster.movieinfo.util;
 
-import android.util.Log;
-
 import com.whut.umrhamster.movieinfo.model.Celebrity;
 import com.whut.umrhamster.movieinfo.model.Movie;
-import com.whut.umrhamster.movieinfo.model.MovieRank;
 import com.whut.umrhamster.movieinfo.model.MovieSimple;
 import com.whut.umrhamster.movieinfo.model.Rating;
 
@@ -25,7 +22,7 @@ public class MovieUtil {
         try {
             JSONObject jsonObject = new JSONObject(json);
             Movie movie = new Movie();
-            movie.setId(jsonObject.getString("id"));
+            movie.setMovieId(jsonObject.getString("id"));
             movie.setTitle(jsonObject.getString("title"));
             movie.setOriginal_title(jsonObject.getString("original_title"));
             movie.setAka(String2Array(jsonObject.getString("aka")));
@@ -49,12 +46,12 @@ public class MovieUtil {
         }
     }
 
-    private static String[] String2Array(String str){
+    private static String String2Array(String str){  //此方法已经过修改，为了避免引起更多错误，不对方法名进行修改
         if (str.equals("[]"))
-            return new String[]{"无"};
+            return "无";
         if (str.length() >=3)
-        return str.substring(2,str.length()-2).split("\",\"");
-        return str.split("");
+        return Array2String(str.substring(2,str.length()-2).split("\",\""));
+        return "无";
     }
 
     public static String Array2String(String[] strings){
@@ -137,30 +134,4 @@ public class MovieUtil {
         }
     }
 
-    //获取解析排行榜电影
-    public static List<MovieRank> Json2RankList(String json){
-        if (json == null){
-            return null;
-        }
-        List<MovieRank> rankList = new ArrayList<>();
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("subjects");
-            for (int i=0;i<jsonArray.length();i++){
-                MovieRank movieRank = new MovieRank();
-                movieRank.setId(jsonArray.getJSONObject(i).getJSONObject("subject").getString("id"));
-                movieRank.setTitle(jsonArray.getJSONObject(i).getJSONObject("subject").getString("title"));
-                movieRank.setOriginalTitle(jsonArray.getJSONObject(i).getJSONObject("subject").getString("original_title"));
-                movieRank.setBox(jsonArray.getJSONObject(i).getInt("box"));
-                movieRank.setNew(jsonArray.getJSONObject(i).getBoolean("new"));
-                movieRank.setGenres(String2Array(jsonArray.getJSONObject(i).getJSONObject("subject").getString("genres")));
-                movieRank.setYear(jsonArray.getJSONObject(i).getJSONObject("subject").getString("year"));
-                movieRank.setImages(jsonArray.getJSONObject(i).getJSONObject("subject").getJSONObject("images").getString("small"));
-                rankList.add(movieRank);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return rankList;
-    }
 }

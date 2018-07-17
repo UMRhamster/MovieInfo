@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -19,9 +20,12 @@ import com.squareup.picasso.Picasso;
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.Celebrity;
 import com.whut.umrhamster.movieinfo.model.Movie;
+import com.whut.umrhamster.movieinfo.model.Rating;
 import com.whut.umrhamster.movieinfo.util.CelebrityUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
 import com.whut.umrhamster.movieinfo.view.BlurTransformation;
+
+import org.litepal.LitePal;
 
 import java.util.List;
 
@@ -56,6 +60,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private FloatingActionButton actionButtonPinglun;
     private FloatingActionButton actionButtonShoucang;
 
+    private boolean isCollection = false;  //用于判断收藏，默认为false
+    private boolean defaultCollection = false; //原来是否已经收藏
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         initView();
         initData();
         initEvent();
+        if (LitePal.isExist(Movie.class,"movieId = ?",movie.getMovieId())){
+            defaultCollection = true;
+            actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
+        }
     }
 
     //初始化界面
@@ -106,9 +117,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewRating.setText(String.valueOf(movie.getRating().getAverage()));
         textViewDirectors.setText(String.format(getResources().getString(R.string.hot_directors), CelebrityUtil.List2String(movie.getDirectors())));
         textViewYear.setText(String.format(getResources().getString(R.string.hot_year),movie.getYear()));
-        textViewGenres.setText(String.format(getResources().getString(R.string.hot_genres),MovieUtil.Array2String(movie.getGenres())));
-        textViewCountries.setText(String.format(getResources().getString(R.string.hot_countries),MovieUtil.Array2String(movie.getCountries())));
-        textViewAka.setText(String.format(getResources().getString(R.string.hot_aka),MovieUtil.Array2String(movie.getAka())));
+        textViewGenres.setText(String.format(getResources().getString(R.string.hot_genres),movie.getGenres()));
+        textViewCountries.setText(String.format(getResources().getString(R.string.hot_countries),movie.getCountries()));
+        textViewAka.setText(String.format(getResources().getString(R.string.hot_aka),movie.getAka()));
         textViewSummary.setText(movie.getSummary());
         textViewTBTile.setText(movie.getTitle());
 
@@ -164,6 +175,55 @@ public class MovieDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //点击收藏
+        actionButtonShoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isCollection = !isCollection;
+                if (isCollection){
+                    Toast.makeText(MovieDetailActivity.this,"收藏成功",Toast.LENGTH_SHORT).show();
+                    actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
+                }else {
+                    Toast.makeText(MovieDetailActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
+                }
+            }
+        });
+        //点击评论
+        actionButtonPinglun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieDetailActivity.this,ReviewActivity.class);
+                intent.putExtra("movieId",movie.getMovieId());  //将电影的id传过去，用于获取电影评论
+                intent.putExtra("movieName",movie.getTitle());
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
     }
 
+    private void saveMovie(){
+        movie.getRating().save();                        //存储评分
+        for (int i=0;i<movie.getDirectors().size();i++){
+            movie.getDirectors().get(i).save();          //存储导演
+        }
+        for (int i=0;i<movie.getCasts().size();i++){     //存储主演
+            movie.getCasts().get(i).save();
+        }
+        movie.save();
+    }
+    @Override
+    protected void onPause() {  //在此声明周期中确定用于最终对于 电影 是否收藏， 以减少对数据库的频繁操作。
+        super.onPause();
+        if (isCollection){          //先判断现在是否要收藏
+            if (!defaultCollection){   //如果原来没有收藏
+                saveMovie();
+            }
+        }else {
+            if (defaultCollection){  //如果原来收藏过，现在不想收藏
+                LitePal.deleteAll(Movie.class,"movieId = ?",movie.getMovieId());
+            }
+        }
+    }
 }

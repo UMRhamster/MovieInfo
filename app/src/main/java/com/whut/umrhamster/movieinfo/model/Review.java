@@ -1,23 +1,24 @@
 package com.whut.umrhamster.movieinfo.model;
 
+import java.io.Serializable;
+
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobDate;
+
 /**
  * Created by 12421 on 2018/7/15.
  */
 
-public class Review {
+public class Review extends BmobObject implements Serializable{
     private int id;         //id
     private String movieId; //电影
-    private int userId;  //用户
-    private String date;    //时间
+    private String movieName; //电影名
+    private String userId;  //用户名
+    private BmobDate date;    //时间
     private String content; //内容
 
     public Review(){}
 
-    public Review(String movieId, String content, String date){
-        this.movieId = movieId;
-        this.content = content;
-        this.date = date;
-    }
     public int getId() {
         return id;
     }
@@ -34,19 +35,19 @@ public class Review {
         this.movieId = movieId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getDate() {
+    public BmobDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(BmobDate date) {
         this.date = date;
     }
 
@@ -56,5 +57,13 @@ public class Review {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 }

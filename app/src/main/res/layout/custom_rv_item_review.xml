@@ -8,7 +8,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="16dp"
-        android:src="@mipmap/timg"
         app:border_color="@color/defaultWhite"/>
     <TextView
         android:id="@+id/custom_rv_item_review_name"
@@ -16,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/custom_rv_item_review_img"
         android:layout_alignTop="@id/custom_rv_item_review_img"
+        android:textColor="@android:color/black"
         android:text="小兔叽呀!"/>
     <TextView
         android:id="@+id/custom_rv_item_review_content"
@@ -25,7 +25,6 @@
         android:layout_marginEnd="16dp"
         android:layout_below="@id/custom_rv_item_review_name"
         android:layout_alignStart="@id/custom_rv_item_review_name"
-        android:textSize="12sp"
         android:text="很棒!很好看!还想再看一次!"/>
     <TextView
         android:id="@+id/custom_rv_item_review_date"

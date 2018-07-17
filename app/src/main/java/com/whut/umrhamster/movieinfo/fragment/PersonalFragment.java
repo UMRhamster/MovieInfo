@@ -21,17 +21,21 @@ import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.activity.AboutActivity;
 import com.whut.umrhamster.movieinfo.activity.CollectionActivity;
 import com.whut.umrhamster.movieinfo.activity.LoginActivity;
+import com.whut.umrhamster.movieinfo.activity.MainActivity;
 import com.whut.umrhamster.movieinfo.activity.ReInfoActivity;
 import com.whut.umrhamster.movieinfo.activity.ReviewActivity;
 import com.whut.umrhamster.movieinfo.model.User;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 import com.whut.umrhamster.movieinfo.view.BlurTransformation;
 import com.whut.umrhamster.movieinfo.view.CircleImageView;
+import com.youth.banner.loader.ImageLoader;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
+
 import java.io.File;
 import java.util.List;
-
-import io.valuesfeng.picker.Picker;
-import io.valuesfeng.picker.engine.PicassoEngine;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,6 +60,8 @@ public class PersonalFragment extends Fragment {
     RelativeLayout relativeLayoutZhuXiao;
 //    @BindView(R.id.fragment_personal_guanyu)
     RelativeLayout relativeLayoutGuanYu;
+
+    private static final int REQUEST_CODE_CHOOSE = 26;
 
     private List<Uri> mSelected;
     private User user;
@@ -131,11 +137,15 @@ public class PersonalFragment extends Fragment {
                     startActivity(new Intent(getActivity(),LoginActivity.class));
                 }else {
                     //如果存在用户就进行头像上传
-                    Picker.from(getActivity())
-                            .count(1)
-                            .enableCamera(false)
-                            .setEngine(new PicassoEngine())
-                            .forResult(2);
+                    Matisse.from(getActivity())
+                            .choose(MimeType.allOf())
+                            .countable(true)
+                            .maxSelectable(9)
+                            .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .imageEngine(new PicassoEngine())
+                            .forResult(REQUEST_CODE_CHOOSE);
                 }
             }
         });
@@ -152,11 +162,9 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null){
-            Uri imageUri = data.getData();
-            if (imageUri != null){
-                Log.d("上传图片",imageUri.getPath());
-            }
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            mSelected = Matisse.obtainResult(data);
+            Log.d("Matisse", "mSelected: " + mSelected);
         }
     }
 

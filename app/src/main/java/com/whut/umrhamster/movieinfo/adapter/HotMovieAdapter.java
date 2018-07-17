@@ -50,7 +50,7 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClick((int)view.getTag());
+                    onItemClickListener.onItemClick((int)view.getTag()-1);
                 }
             });
             ViewHolder holder = new ViewHolder(view);
@@ -74,7 +74,9 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Movie movieTemp = movieList.get(position-1);
             Picasso.get().load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
             ((ViewHolder) holder).textViewTitle.setText(movieTemp.getTitle());
-            ((ViewHolder) holder).textViewGenres.setText(movieTemp.getGenres()[0]);
+            String[] genres = movieTemp.getGenres().split("、");
+            ((ViewHolder) holder).textViewGenres.setText(genres[0]); //只取第一个标签
+
             ((ViewHolder) holder).textViewSummary.setText(movieTemp.getSummary());
             ((ViewHolder) holder).textViewPinglun.setText(String.format(context.getResources().getString(R.string.rating_count),movieTemp.getRating_count()));
             ((ViewHolder) holder).textViewXiangkan.setText(String.format(context.getResources().getString(R.string.wish_count),movieTemp.getWish_count()));
@@ -145,12 +147,12 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return movieList.isEmpty()?0:movieList.size()+1;
+        return movieList.isEmpty()?0:movieList.size()+2;   //多出来的两个，一个是轮播图的位置，一个是底部上拉加载的位置
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position  == movieList.size()){
+        if (position  == movieList.size()+1){
             return TYPE_FOOTER;
         }else if (position == 0){
             return TYPE_BANNER;
@@ -206,7 +208,7 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //改变上拉加载条目状态
     public void changeShowStatus(int value){
         showStatus = value;
-        notifyItemChanged(movieList.size());
+        notifyItemChanged(movieList.size()+1);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){

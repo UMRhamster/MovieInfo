@@ -4,7 +4,7 @@
     <dbname value="movie_db" />
 
     <!--数据库的版本号-->
-    <version value="1" />
+    <version value="3" />
 
     <!--
     要映射的实体类路径

@@ -1,6 +1,7 @@
 package com.whut.umrhamster.movieinfo.model;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
@@ -8,7 +9,7 @@ import java.io.Serializable;
  * Created by 12421 on 2018/7/9.
  */
 
-public class Celebrity extends LitePal implements Serializable{
+public class Celebrity extends LitePalSupport implements Serializable{
     private String alt;     //网页链接
     private String avatars; //影像
     private String name;    //名字

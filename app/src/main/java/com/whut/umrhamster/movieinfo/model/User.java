@@ -14,6 +14,7 @@ public class User extends BmobObject implements Serializable{
     private String password;
     private String nickname;
     private String avatars;
+    private String movieCollected;   //记录收藏的电影的id
     public User(){}
 
     public int getId() {
@@ -54,5 +55,13 @@ public class User extends BmobObject implements Serializable{
 
     public void setAvatars(String avatars) {
         this.avatars = avatars;
+    }
+
+    public String getMovieCollected() {
+        return movieCollected;
+    }
+
+    public void setMovieCollected(String movieCollected) {
+        this.movieCollected = movieCollected;
     }
 }

@@ -1,6 +1,7 @@
 package com.whut.umrhamster.movieinfo.model;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,15 +10,15 @@ import java.util.List;
  * Created by 12421 on 2018/7/9.
  */
 
-public class Movie extends LitePal implements Serializable{
-    private String id;             //条目id
+public class Movie extends LitePalSupport implements Serializable{
+    private String movieId;        //条目id
     private String title;          //中文名
     private String original_title; //原名
-    private String[] aka;          //又名
+    private String aka;            //又名
     private String year;           //年代
-    private String[] genres;       //影片类型
+    private String genres;       //影片类型
     private String summary;        //简介
-    private String[] countries;    //制片国家/地区
+    private String countries;    //制片国家/地区
     private String images;         //海报
     private String alt;            //原网页
     private String mobile_url;     //移动版原网页
@@ -27,16 +28,15 @@ public class Movie extends LitePal implements Serializable{
     private int collect_count;     //看过人数
     private List<Celebrity> directors;   //导演
     private List<Celebrity> casts;       //主演
-    private int rankInBox;               //排行（仅在票房榜中使用）
 
     public Movie(){}
 
-    public String getId() {
-        return id;
+    public String getMovieId() {
+        return movieId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 
     public String getTitle() {
@@ -55,11 +55,11 @@ public class Movie extends LitePal implements Serializable{
         this.original_title = original_title;
     }
 
-    public String[] getAka() {
+    public String getAka() {
         return aka;
     }
 
-    public void setAka(String[] aka) {
+    public void setAka(String aka) {
         this.aka = aka;
     }
 
@@ -71,11 +71,11 @@ public class Movie extends LitePal implements Serializable{
         this.year = year;
     }
 
-    public String[] getGenres() {
+    public String getGenres() {
         return genres;
     }
 
-    public void setGenres(String[] genres) {
+    public void setGenres(String genres) {
         this.genres = genres;
     }
 
@@ -87,11 +87,11 @@ public class Movie extends LitePal implements Serializable{
         this.summary = summary;
     }
 
-    public String[] getCountries() {
+    public String getCountries() {
         return countries;
     }
 
-    public void setCountries(String[] countries) {
+    public void setCountries(String countries) {
         this.countries = countries;
     }
 
@@ -167,11 +167,4 @@ public class Movie extends LitePal implements Serializable{
         this.casts = casts;
     }
 
-    public int getRankInBox() {
-        return rankInBox;
-    }
-
-    public void setRankInBox(int rankInBox) {
-        this.rankInBox = rankInBox;
-    }
 }

@@ -2,16 +2,25 @@ package com.whut.umrhamster.movieinfo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.Review;
+import com.whut.umrhamster.movieinfo.model.User;
+import com.whut.umrhamster.movieinfo.util.SPUtil;
 import com.whut.umrhamster.movieinfo.view.CircleImageView;
 
+import java.io.File;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by 12421 on 2018/7/15.
@@ -35,17 +44,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 //        ((ViewHolder)holder).textViewName.setText();    //先从评论记录 拿到用户id,再查询到用户名
         ((ViewHolder)holder).textViewContent.setText(reviewList.get(position).getContent());
-        ((ViewHolder)holder).textViewDate.setText(reviewList.get(position).getDate());
+        ((ViewHolder)holder).textViewDate.setText(reviewList.get(position).getDate().getDate());
         if (!isPersonal){  //如果不是"我的评论",不需要显示电影名
             ((ViewHolder)holder).textViewMovie.setVisibility(View.GONE);
-//            ((ViewHolder)holder).circleImageView            //使用Picasso加载本地自己的图片
+            BmobQuery<User> userQuery = new BmobQuery<>();
+            userQuery.addWhereEqualTo("name",reviewList.get(position).getUserId());
+            userQuery.findObjects(new FindListener<User>() {
+                @Override
+                public void done(List<User> list, BmobException e) {
+                    if (e == null && list.size()>0){
+                        Picasso.get().load(list.get(0).getAvatars()).into(((ViewHolder)holder).circleImageView);
+                    }
+                }
+            });
         }else {
+            Picasso.get().load(new File(SPUtil.loadData(context,"user","local_avatars"))).into(((ViewHolder)holder).circleImageView); //使用Picasso加载本地图片
             ((ViewHolder)holder).textViewMovie.setVisibility(View.VISIBLE);
-            ((ViewHolder)holder).textViewMovie.setText(context.getResources().getString(R.string.review_movie,reviewList.get(position).getMovieId()));
-            //        ((ViewHolder)holder).circleImageView            //使用Picasso加载网络图片
+            ((ViewHolder)holder).textViewMovie.setText(context.getResources().getString(R.string.review_movie,reviewList.get(position).getMovieName()));
         }
     }
 
