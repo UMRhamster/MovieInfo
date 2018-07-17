@@ -2,7 +2,9 @@ package com.whut.umrhamster.movieinfo.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,9 +50,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     private Context context;
 
     //底部工具栏
-    private ImageView imageViewShouCang;
-    private TextView textViewShouCang;
-    private TextView textViewPinglun;
+//    private ImageView imageViewShouCang;
+//    private TextView textViewShouCang;
+//    private TextView textViewPinglun;
+    private FloatingActionButton actionButtonPinglun;
+    private FloatingActionButton actionButtonShoucang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +86,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.movie_detail_hot_celebrities_hsv_ll);
 
-        imageViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang);
-        textViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang_tv);
-        textViewPinglun = findViewById(R.id.movie_detail_hot_tb_bottom_pinglun_tv);
+//        imageViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang);
+//        textViewShouCang = findViewById(R.id.movie_detail_hot_tb_bottom_shoucang_tv);
+//        textViewPinglun = findViewById(R.id.movie_detail_hot_tb_bottom_pinglun_tv);
+
+        actionButtonPinglun = findViewById(R.id.movie_detail_hot_pinglun_fab);
+        actionButtonShoucang = findViewById(R.id.movie_detail_hot_shoucang_fab);
+
+        actionButtonPinglun.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.themePurple)));
+        actionButtonShoucang.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.themePurple)));
     }
     private void initData(){
         movie = (Movie) getIntent().getSerializableExtra("movie");
@@ -106,7 +116,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         addCelebrityItem(movie.getCasts(),"主演");
 
         if (movie.getRating_count() > 0){
-            textViewPinglun.setText(movie.getRating_count());
+//            textViewPinglun.setText(movie.getRating_count());
         }
         //还需要判断是否收藏...
 

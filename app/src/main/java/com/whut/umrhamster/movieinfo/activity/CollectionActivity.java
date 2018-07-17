@@ -39,7 +39,7 @@ public class CollectionActivity extends AppCompatActivity {
 
     private void initData(){
         movieList = LitePal.findAll(Movie.class,true); //从本地数据库中获取 收藏的电影信息
-        adapter = new HotMovieAdapter(this,movieList);
+        adapter = new HotMovieAdapter(this,movieList,0);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         adapter.setOnItemClickListener(new HotMovieAdapter.OnItemClickListener() {

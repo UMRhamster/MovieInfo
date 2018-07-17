@@ -96,4 +96,27 @@ public class HttpUtil {
             return null;
         }
     }
+
+    //通过搜索获取电影信息
+    //
+    public static String getMovieSimpleByType(int type, String word){
+        Request request = null;
+        if (type == 0){
+            request = new Request.Builder()
+                    .url("http://api.douban.com/v2/movie/search?q="+word)
+                    .build();
+        }else {
+            request = new Request.Builder()
+                    .url("http://api.douban.com/v2/movie/search?tag="+word)
+                    .build();
+        }
+        Response response = null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

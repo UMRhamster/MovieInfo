@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background"
+    tools:context="com.whut.umrhamster.movieinfo.activity.LoginActivity">
+
+    <ImageView
+        android:id="@+id/ac_login_icon"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/cube" />
+
+    <RelativeLayout
+        android:id="@+id/ac_login_rl_name"
+        android:layout_below="@id/ac_login_icon"
+        android:background="@drawable/login_et_bg"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/ac_login_rl_name_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/login_name"/>
+        <EditText
+            android:id="@+id/ac_login_rl_name_et"
+            android:layout_marginStart="8dp"
+            android:maxLength="16"
+            android:layout_toEndOf="@id/ac_login_rl_name_iv"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ac_login_rl_password"
+        android:layout_below="@id/ac_login_rl_name"
+        android:background="@drawable/login_et_bg"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/ac_login_rl_password_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_password"/>
+        <EditText
+            android:id="@+id/ac_login_rl_password_et"
+            android:layout_marginStart="8dp"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            android:layout_toEndOf="@id/ac_login_rl_password_iv"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ac_login_btn"
+        android:layout_below="@id/ac_login_rl_password"
+        android:background="@drawable/login_btn_bg"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="40dp"
+        android:text="LOGIN"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"/>
+    <TextView
+        android:id="@+id/ac_login_tv_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:text="New here? Sign Up"/>
+
+</RelativeLayout>

@@ -1,9 +1,14 @@
 package com.whut.umrhamster.movieinfo.fragment;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +20,20 @@ import com.squareup.picasso.Picasso;
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.activity.AboutActivity;
 import com.whut.umrhamster.movieinfo.activity.CollectionActivity;
+import com.whut.umrhamster.movieinfo.activity.LoginActivity;
 import com.whut.umrhamster.movieinfo.activity.ReInfoActivity;
 import com.whut.umrhamster.movieinfo.activity.ReviewActivity;
+import com.whut.umrhamster.movieinfo.model.User;
+import com.whut.umrhamster.movieinfo.util.SPUtil;
 import com.whut.umrhamster.movieinfo.view.BlurTransformation;
 import com.whut.umrhamster.movieinfo.view.CircleImageView;
+import java.io.File;
+import java.util.List;
+
+import io.valuesfeng.picker.Picker;
+import io.valuesfeng.picker.engine.PicassoEngine;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by 12421 on 2018/7/11.
@@ -41,13 +56,15 @@ public class PersonalFragment extends Fragment {
     RelativeLayout relativeLayoutZhuXiao;
 //    @BindView(R.id.fragment_personal_guanyu)
     RelativeLayout relativeLayoutGuanYu;
+
+    private List<Uri> mSelected;
+    private User user;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal,container,false);
         initView(view);
         initEvent();
-        Picasso.get().load(R.mipmap.timg).transform(new BlurTransformation(getActivity())).into(imageViewBG);
         return view;
     }
 
@@ -94,6 +111,7 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //进入登陆界面，并清楚sharepreference和数据库中的数据
+                startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
         //关于
@@ -105,5 +123,54 @@ public class PersonalFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }else {
+                    //如果存在用户就进行头像上传
+                    Picker.from(getActivity())
+                            .count(1)
+                            .enableCamera(false)
+                            .setEngine(new PicassoEngine())
+                            .forResult(2);
+                }
+            }
+        });
+        textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null){
+            Uri imageUri = data.getData();
+            if (imageUri != null){
+                Log.d("上传图片",imageUri.getPath());
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
+            textViewName.setText(SPUtil.loadData(getActivity(),"user","nickname"));
+            Picasso.get().load(SPUtil.loadData(getActivity(),"user","avatars")).transform(new BlurTransformation(getActivity())).into(imageViewBG);
+
+            Bitmap bitmap = BitmapFactory.decodeFile(SPUtil.loadData(getActivity(),"user","local_avatars"));
+            circleImageView.setImageBitmap(bitmap);
+        }
+
+        Log.d("Fragment","onresume");
     }
 }

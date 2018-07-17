@@ -27,6 +27,7 @@ public class Movie extends LitePal implements Serializable{
     private int collect_count;     //看过人数
     private List<Celebrity> directors;   //导演
     private List<Celebrity> casts;       //主演
+    private int rankInBox;               //排行（仅在票房榜中使用）
 
     public Movie(){}
 
@@ -164,5 +165,13 @@ public class Movie extends LitePal implements Serializable{
 
     public void setCasts(List<Celebrity> casts) {
         this.casts = casts;
+    }
+
+    public int getRankInBox() {
+        return rankInBox;
+    }
+
+    public void setRankInBox(int rankInBox) {
+        this.rankInBox = rankInBox;
     }
 }

@@ -15,7 +15,9 @@ public class CelebrityUtil {
             stringBuilder.append(celebrity.getName())
                     .append("、");
         }
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        if (celebrities.size() >0){
+            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        }
         return stringBuilder.toString();
     }
 }

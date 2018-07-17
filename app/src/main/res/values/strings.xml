@@ -16,6 +16,8 @@
     <string name="hot_genres">类型：%1$s</string>
     <string name="hot_countries">制片地：%1$s</string>
     <string name="hot_aka">又名：%1$s</string>
+    <string name="box_box">票房：%1$d</string>
+
 
     <string name="review_movie">《%1$s》</string>
 </resources>

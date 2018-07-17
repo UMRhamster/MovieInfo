@@ -9,6 +9,8 @@
     <color name="themeDarkPurple">#6800B3</color>
     <color name="whiteGray">#efefef</color>
     <color name="tabTextColor">#8a8a8a</color>
+    
+    <color name="transparentPurple">#887c08d0</color>
 
     <color name="defaultWhite">#fafafa</color>
 </resources>

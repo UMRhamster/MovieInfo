@@ -38,10 +38,19 @@
                 android:hint=" 搜索内容"
                 android:lines="1"
                 android:maxLines="1"
+                android:layout_marginEnd="8dp"
                 android:textSize="14sp"
                 android:padding="4dp"
-                android:layout_toStartOf="@id/ac_search_ns"
+                android:layout_toStartOf="@id/ac_search_et_delete"
                 android:textColor="@android:color/black"/>
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/ac_search_et_delete"
+                android:layout_toStartOf="@id/ac_search_ns"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_edit_delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/ac_search_ns"
                 android:layout_width="wrap_content"
@@ -61,5 +70,36 @@
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+    <!--<TextView-->
+        <!--android:id="@+id/ac_search_tv_title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/ac_search_tb"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:layout_alignStart="@id/ac_search_rv_history"-->
+        <!--android:layout_marginTop="13dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:text="搜索历史"/>-->
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/ac_search_rv_history"-->
+        <!--android:layout_margin="14dp"-->
+        <!--android:layout_below="@id/ac_search_tv_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/ac_search_rv_search"-->
+        <!--android:layout_below="@id/ac_search_tb"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/defaultWhite">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
+    <FrameLayout
+        android:id="@+id/ac_search_fl"
+        android:layout_below="@id/ac_search_tb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    </FrameLayout>
 </RelativeLayout>

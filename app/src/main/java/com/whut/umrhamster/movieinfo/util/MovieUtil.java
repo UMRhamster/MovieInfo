@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.whut.umrhamster.movieinfo.model.Celebrity;
 import com.whut.umrhamster.movieinfo.model.Movie;
+import com.whut.umrhamster.movieinfo.model.MovieRank;
+import com.whut.umrhamster.movieinfo.model.MovieSimple;
 import com.whut.umrhamster.movieinfo.model.Rating;
 
 import org.json.JSONArray;
@@ -38,8 +40,8 @@ public class MovieUtil {
             movie.setRating_count(0);
             movie.setWish_count(jsonObject.getInt("wish_count"));
             movie.setCollect_count(jsonObject.getInt("collect_count"));
-            movie.setDirectors(getCelebrity(jsonObject.getJSONArray("directors"),movie.getTitle()));
-            movie.setCasts(getCelebrity(jsonObject.getJSONArray("casts"),movie.getTitle()));
+            movie.setDirectors(getCelebrity(jsonObject.getJSONArray("directors")));
+            movie.setCasts(getCelebrity(jsonObject.getJSONArray("casts")));
             return movie;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -48,7 +50,9 @@ public class MovieUtil {
     }
 
     private static String[] String2Array(String str){
-        if (str.length() >=4)
+        if (str.equals("[]"))
+            return new String[]{"无"};
+        if (str.length() >=3)
         return str.substring(2,str.length()-2).split("\",\"");
         return str.split("");
     }
@@ -79,7 +83,7 @@ public class MovieUtil {
     }
 
     //从jsonArray中生成Celebrity集合，包括导演和主演
-    public static List<Celebrity> getCelebrity(JSONArray jsonArray, String title){
+    public static List<Celebrity> getCelebrity(JSONArray jsonArray){
         List<Celebrity> celebrityList = new ArrayList<>();
         for (int i=0;i<jsonArray.length();i++){
             Celebrity celebrityTemp = new Celebrity();
@@ -102,9 +106,61 @@ public class MovieUtil {
                 celebrityList.add(celebrityTemp);
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.d("dasd",i+" "+title);
+//                Log.d("dasd",i+" "+title);
             }
         }
         return celebrityList;
+    }
+
+    //解析获取简化版电影信息  搜索用
+    public static List<MovieSimple> Json2SimpleList(String json){
+        if (json == null){
+            return null;
+        }
+        List<MovieSimple> simpleList = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray("subjects");
+            for (int i=0;i<jsonArray.length();i++){
+                MovieSimple simple = new MovieSimple();
+                simple.setTitle(jsonArray.getJSONObject(i).getString("title"));
+                simple.setYear(jsonArray.getJSONObject(i).getString("year"));
+                simple.setDirectors(getCelebrity(jsonArray.getJSONObject(i).getJSONArray("directors")));
+                simple.setGenres(String2Array(jsonArray.getJSONObject(i).getString("genres")));
+                simple.setId(jsonArray.getJSONObject(i).getString("id"));
+                simpleList.add(simple);
+            }
+            return simpleList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //获取解析排行榜电影
+    public static List<MovieRank> Json2RankList(String json){
+        if (json == null){
+            return null;
+        }
+        List<MovieRank> rankList = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray("subjects");
+            for (int i=0;i<jsonArray.length();i++){
+                MovieRank movieRank = new MovieRank();
+                movieRank.setId(jsonArray.getJSONObject(i).getJSONObject("subject").getString("id"));
+                movieRank.setTitle(jsonArray.getJSONObject(i).getJSONObject("subject").getString("title"));
+                movieRank.setOriginalTitle(jsonArray.getJSONObject(i).getJSONObject("subject").getString("original_title"));
+                movieRank.setBox(jsonArray.getJSONObject(i).getInt("box"));
+                movieRank.setNew(jsonArray.getJSONObject(i).getBoolean("new"));
+                movieRank.setGenres(String2Array(jsonArray.getJSONObject(i).getJSONObject("subject").getString("genres")));
+                movieRank.setYear(jsonArray.getJSONObject(i).getJSONObject("subject").getString("year"));
+                movieRank.setImages(jsonArray.getJSONObject(i).getJSONObject("subject").getJSONObject("images").getString("small"));
+                rankList.add(movieRank);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return rankList;
     }
 }

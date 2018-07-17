@@ -1,6 +1,5 @@
 package com.whut.umrhamster.movieinfo.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.adapter.MainFragmentPagerAdapter;
-import com.whut.umrhamster.movieinfo.fragment.BoxFragment;
-import com.whut.umrhamster.movieinfo.fragment.CardFragment;
+import com.whut.umrhamster.movieinfo.fragment.BoxMovieFragment;
+import com.whut.umrhamster.movieinfo.fragment.TopMovieFragment;
 import com.whut.umrhamster.movieinfo.fragment.HotMovieFragment;
 import com.whut.umrhamster.movieinfo.fragment.PersonalFragment;
 import com.whut.umrhamster.movieinfo.fragment.SoonMovieFragment;
@@ -69,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(new HotMovieFragment());
         fragmentList.add(new SoonMovieFragment());
-        fragmentList.add(new CardFragment());
-        fragmentList.add(new BoxFragment());
+        fragmentList.add(new TopMovieFragment());
+        fragmentList.add(new BoxMovieFragment());
         fragmentList.add(new PersonalFragment());
         adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(),fragmentList);
         viewPager.setAdapter(adapter);

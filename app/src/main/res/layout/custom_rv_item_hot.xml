@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:background="@drawable/rv_item_hot_bg"
     android:padding="8dp">
     <ImageView
@@ -92,5 +94,29 @@
             android:layout_below="@id/rv_item_hot_ll"
             android:text="上映时间:2018"
             android:lines="1"/>
+        <ImageView
+            android:id="@+id/rv_item_hot_rank_iv"
+
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_alignBottom="@id/rv_item_hot_year"
+            android:layout_alignEnd="@id/rv_item_hot_rl"
+            android:src="@drawable/box_order_default"/>
+        <TextView
+            android:id="@+id/rv_item_hot_rank_tv"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/rv_item_hot_rank_iv"
+            android:layout_alignStart="@id/rv_item_hot_rank_iv"
+            android:layout_alignTop="@id/rv_item_hot_rank_iv"
+            android:layout_alignBottom="@id/rv_item_hot_rank_iv"
+            android:text="1"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="#707e7e"/>
     </RelativeLayout>
 </RelativeLayout>

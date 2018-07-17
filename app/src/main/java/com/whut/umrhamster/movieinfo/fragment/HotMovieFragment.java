@@ -20,6 +20,7 @@ import com.whut.umrhamster.movieinfo.activity.MovieDetailActivity;
 import com.whut.umrhamster.movieinfo.adapter.HotMovieAdapter;
 import com.whut.umrhamster.movieinfo.model.Movie;
 import com.whut.umrhamster.movieinfo.util.HotMovieUtil;
+import com.whut.umrhamster.movieinfo.util.HttpUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
 import com.whut.umrhamster.movieinfo.view.StarBar;
 
@@ -79,7 +80,7 @@ public class HotMovieFragment extends Fragment {
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new HotMovieAdapter(getActivity(),movieList);
+        adapter = new HotMovieAdapter(getActivity(),movieList,0);
         adapter.setOnItemClickListener(new HotMovieAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -96,34 +97,52 @@ public class HotMovieFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                OkHttpClient okHttpClient = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("http://api.douban.com/v2/movie/in_theaters")
-                        .build();
-                Response response = null;
-                try {
-                    response = okHttpClient.newCall(request).execute();
-                    String json = response.body().string();
-                    List<String> idList = HotMovieUtil.getHotMoviews(json);
-                    int count = 0; //计数 用于加载4个之后 再刷新显示
-                    for (String id : idList){
-                        Request request1 = new Request.Builder()
-                                .url("http://api.douban.com/v2/movie/subject/"+id)
-                                .build();
-                        response = okHttpClient.newCall(request1).execute();
-                        movieList.add(MovieUtil.Json2Movie(response.body().string()));
-                        if (++count%4 == 0 || count == idList.size()){ //每加载四个之后进行界面刷新，或者加载到最后刷新
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                String hotJson = HttpUtil.getHotMovie("长沙",0,10);
+                if (hotJson == null){   //返回为空，一般情况为被封IP
+                    return;
                 }
+                List<String> idList = HotMovieUtil.getHotMovies(hotJson);
+                int count = 0;
+                for (String id : idList){
+                    String movieJson = HttpUtil.getMovieById(id);
+                    movieList.add(MovieUtil.Json2Movie(movieJson));
+                    if (++count%4 == 0 || count == idList.size()){
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+//                OkHttpClient okHttpClient = new OkHttpClient();
+//                Request request = new Request.Builder()
+//                        .url("http://api.douban.com/v2/movie/in_theaters")
+//                        .build();
+//                Response response = null;
+//                try {
+//                    response = okHttpClient.newCall(request).execute();
+//                    String json = response.body().string();
+//                    List<String> idList = HotMovieUtil.getHotMovies(json);
+//                    int count = 0; //计数 用于加载4个之后 再刷新显示
+//                    for (String id : idList){
+//                        Request request1 = new Request.Builder()
+//                                .url("http://api.douban.com/v2/movie/subject/"+id)
+//                                .build();
+//                        response = okHttpClient.newCall(request1).execute();
+//                        movieList.add(MovieUtil.Json2Movie(response.body().string()));
+//                        if (++count%4 == 0 || count == idList.size()){ //每加载四个之后进行界面刷新，或者加载到最后刷新
+//                            handler.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    adapter.notifyDataSetChanged();
+//                                }
+//                            });
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
     }
@@ -170,10 +189,5 @@ public class HotMovieFragment extends Fragment {
                 },2000);
             }
         });
-    }
-
-    //网络请求豆瓣api数据
-    private void getData(){
-
     }
 }
