@@ -10,10 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
+import com.whut.umrhamster.movieinfo.model.User;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class ReInfoActivity extends AppCompatActivity {
     @BindView(R.id.ac_reinfo_rl_nicheng_et)
@@ -32,6 +39,8 @@ public class ReInfoActivity extends AppCompatActivity {
     ImageView imageViewShouQi;
     @BindView(R.id.ac_reinfo_tl)
     TableLayout tableLayout;
+    @BindView(R.id.ac_reinfo_iv_back)
+    ImageView imageViewBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +52,7 @@ public class ReInfoActivity extends AppCompatActivity {
         initEvent();
     }
     private void initData(){
-        editTextNiCheng.setText("小兔叽呀");  //测试用  预计从shareprefenence中获取
+        editTextNiCheng.setText(SPUtil.loadData(ReInfoActivity.this,"user","nickname"));  //从shareprefenence中获取
     }
     private void initEvent(){
         imageViewPull.setOnClickListener(new View.OnClickListener() {
@@ -63,25 +72,60 @@ public class ReInfoActivity extends AppCompatActivity {
         textViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String yuan = editTextYuan.getText().toString();
-                String xin = editTextXin.getText().toString();
-                String queren = editTextQueRen.getText().toString();
-                if (!SPUtil.loadData(ReInfoActivity.this,"user","password").equals(yuan)){
+                if (!editTextNiCheng.getText().toString().matches("[a-zA-Z\u4e00-\u9fa5]+")){
                     Toast.makeText(ReInfoActivity.this,"原密码不正确",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (xin.isEmpty() || queren.isEmpty()){
-                    Toast.makeText(ReInfoActivity.this,"密码不能为空",Toast.LENGTH_SHORT).show();
-                    return;
+                if (tableLayout.getVisibility() == View.VISIBLE){
+                    String yuan = editTextYuan.getText().toString();
+                    String xin = editTextXin.getText().toString();
+                    String queren = editTextQueRen.getText().toString();
+                    if (!SPUtil.loadData(ReInfoActivity.this,"user","password").equals(yuan)){
+                        Toast.makeText(ReInfoActivity.this,"原密码不正确",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (xin.isEmpty() || queren.isEmpty()){
+                        Toast.makeText(ReInfoActivity.this,"密码不能为空",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (!xin.equals(queren)){
+                        Toast.makeText(ReInfoActivity.this,"两次密码不一致",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
-                if (!xin.equals(queren)){
-                    Toast.makeText(ReInfoActivity.this,"两次密码不一致",Toast.LENGTH_SHORT).show();
-                    return;
-                }else {
-                    Toast.makeText(ReInfoActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
-                    //进行密码修改
-                    //修改数据库
-                    //修改sharepreference
+                upDateInfo();
+            }
+        });
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+    private void upDateInfo(){
+        BmobQuery<User> userQuery = new BmobQuery<>();
+        userQuery.addWhereEqualTo("name",SPUtil.loadData(ReInfoActivity.this,"user","name"));
+        userQuery.findObjects(new FindListener<User>() {
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e == null && list.size()>0){
+                    User user = list.get(0);
+                    user.setNickname(editTextNiCheng.getText().toString());
+                    if (tableLayout.getVisibility() == View.VISIBLE){
+                        user.setPassword(editTextQueRen.getText().toString());
+                    }
+                    user.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null){
+                                Toast.makeText(ReInfoActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(ReInfoActivity.this,"修改失败",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });

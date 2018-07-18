@@ -2,7 +2,6 @@ package com.whut.umrhamster.movieinfo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,36 +12,27 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.Movie;
-import com.whut.umrhamster.movieinfo.view.PicassoImageLoader;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
+import com.whut.umrhamster.movieinfo.model.Review;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 12421 on 2018/7/11.
+ * Created by 12421 on 2018/7/18.
  */
 
-public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private static final int TYPE_FOOTER = 0;
     private static final int TYPE_ITEM = 1;
-    private static final int TYPE_BANNER = 2;
     private int showStatus =0;   //上拉加载条目 状态
 
-    private int type;
     private Context context;
     private List<Movie> movieList;
 
     private OnItemClickListener onItemClickListener;
-    public HotMovieAdapter(Context context, List<Movie> movieList, int type){
+    public CollectionAdapter(Context context, List<Movie> movieList){
         this.context = context;
         this.movieList = movieList;
-        this.type = type;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM){   //正常条目
@@ -50,19 +40,15 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClick((int)view.getTag()-1);
+                    onItemClickListener.onItemClick((int)view.getTag());
                 }
             });
-            ViewHolder holder = new ViewHolder(view);
+            HotMovieAdapter.ViewHolder holder = new HotMovieAdapter.ViewHolder(view);
             return holder;
         }else if (viewType == TYPE_FOOTER){   //上拉加载条目
             View view = LayoutInflater.from(context).inflate(R.layout.custom_rv_footer,parent,false);
-            FooterViewHolder footerViewHolder = new FooterViewHolder(view);
+            HotMovieAdapter.FooterViewHolder footerViewHolder = new HotMovieAdapter.FooterViewHolder(view);
             return footerViewHolder;
-        }else if (viewType == TYPE_BANNER){
-            View view = LayoutInflater.from(context).inflate(R.layout.custom_rv_banner,parent,false);
-            BannerViewHolder bannerViewHolder = new BannerViewHolder(view);
-            return bannerViewHolder;
         }else {
             return null;
         }
@@ -71,40 +57,20 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof  ViewHolder){
-            Movie movieTemp = movieList.get(position-1);
+            Movie movieTemp = movieList.get(position);
             Picasso.get().load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
             ((ViewHolder) holder).textViewTitle.setText(movieTemp.getTitle());
             String[] genres = movieTemp.getGenres().split("、");
             ((ViewHolder) holder).textViewGenres.setText(genres[0]); //只取第一个标签
 
             ((ViewHolder) holder).textViewSummary.setText(movieTemp.getSummary());
-            //修改后不再列表上显示评论数量
-//            ((ViewHolder) holder).textViewPinglun.setText(String.format(context.getResources().getString(R.string.rating_count),movieTemp.getRating_count()));
+            ((ViewHolder) holder).textViewPinglun.setText(String.format(context.getResources().getString(R.string.rating_count),movieTemp.getRating_count()));
             ((ViewHolder) holder).textViewXiangkan.setText(String.format(context.getResources().getString(R.string.wish_count),movieTemp.getWish_count()));
             ((ViewHolder) holder).textViewKanguo.setText(String.format(context.getResources().getString(R.string.collect_count),movieTemp.getCollect_count()));
             ((ViewHolder) holder).textViewYear.setText(String.format(context.getResources().getString(R.string.year),movieTemp.getYear()));
-            if (type == 1){
-                ((ViewHolder) holder).textViewRank.setVisibility(View.VISIBLE);
-                ((ViewHolder) holder).imageViewRank.setVisibility(View.VISIBLE);
-                ((ViewHolder) holder).textViewRank.setText(String.valueOf(position));
-                switch (position){
-                    case 1:
-                        ((ViewHolder) holder).imageViewRank.setImageResource(R.drawable.box_order_1);
-                        break;
-                    case 2:
-                        ((ViewHolder) holder).imageViewRank.setImageResource(R.drawable.box_order_2);
-                        break;
-                    case 3:
-                        ((ViewHolder) holder).imageViewRank.setImageResource(R.drawable.box_order_3);
-                        break;
-                    default:
-                        ((ViewHolder) holder).imageViewRank.setImageResource(R.drawable.box_order_default);
-                        break;
-                }
-            }else {
-                ((ViewHolder) holder).textViewRank.setVisibility(View.INVISIBLE);
-                ((ViewHolder) holder).imageViewRank.setVisibility(View.INVISIBLE);
-            }
+
+            ((ViewHolder) holder).textViewRank.setVisibility(View.GONE);
+            ((ViewHolder) holder).imageViewRank.setVisibility(View.GONE);
         }else if (holder instanceof  FooterViewHolder){
             if (showStatus == 0){
                 ((FooterViewHolder) holder).textView.setText("松开手指进行加载");
@@ -116,52 +82,23 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((FooterViewHolder) holder).textView.setText("已经没有更多了");
                 ((FooterViewHolder) holder).progressBar.setVisibility(View.GONE);
             }
-        }else if (holder instanceof BannerViewHolder){  //轮播图处理
-            List<String> urlList = new ArrayList<>(3);
-            List<String> nameList = new ArrayList<>(3);
-            for (int i=0;i<movieList.size();i++){
-                if (i == 3){
-                    break;
-                }
-                nameList.add(movieList.get(i).getTitle());
-                urlList.add(movieList.get(i).getImages());
-            }
-            ((BannerViewHolder)holder).banner.setImageLoader(new PicassoImageLoader());
-            ((BannerViewHolder)holder).banner.setImages(urlList);  //设置轮播图片
-            ((BannerViewHolder)holder).banner.setBannerTitles(nameList);  //设置标题
-            ((BannerViewHolder)holder).banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE); //设置指示器位置
-            ((BannerViewHolder)holder).banner.setBannerAnimation(Transformer.Default);
-            ((BannerViewHolder)holder).banner.setDelayTime(2500);//轮播时间
-            ((BannerViewHolder)holder).banner.setIndicatorGravity(BannerConfig.RIGHT);  //设置指示器位置
-
-            ((BannerViewHolder)holder).banner.setOnBannerListener(new OnBannerListener() {
-                @Override
-                public void OnBannerClick(int position) {
-                    onItemClickListener.onItemClick(position);
-                }
-            });
-
-            ((BannerViewHolder)holder).banner.start();
         }
         holder.itemView.setTag(position);
     }
 
     @Override
-    public int getItemCount() {
-        return movieList.isEmpty()?0:movieList.size()+2;   //多出来的两个，一个是轮播图的位置，一个是底部上拉加载的位置
-    }
-
-    @Override
     public int getItemViewType(int position) {
-        if (position  == movieList.size()+1){
+        if (position  == movieList.size()){
             return TYPE_FOOTER;
-        }else if (position == 0){
-            return TYPE_BANNER;
         }else {
             return TYPE_ITEM;
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return movieList.isEmpty()?0:movieList.size()+1;
+    }
     //正常条目
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageViewPost;    //海报
@@ -198,18 +135,10 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             textView = itemView.findViewById(R.id.custom_rv_footer_tv);
         }
     }
-    static class BannerViewHolder extends RecyclerView.ViewHolder{
-        Banner banner;
-        public BannerViewHolder(View itemView) {
-            super(itemView);
-            banner = itemView.findViewById(R.id.custom_rv_banner_banner);
-        }
-    }
-
     //改变上拉加载条目状态
     public void changeShowStatus(int value){
         showStatus = value;
-        notifyItemChanged(movieList.size()+1);
+        notifyItemChanged(movieList.size());
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){

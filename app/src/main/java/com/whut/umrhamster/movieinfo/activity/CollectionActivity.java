@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.whut.umrhamster.movieinfo.R;
+import com.whut.umrhamster.movieinfo.adapter.CollectionAdapter;
 import com.whut.umrhamster.movieinfo.adapter.HotMovieAdapter;
 import com.whut.umrhamster.movieinfo.model.Movie;
 
@@ -25,8 +28,10 @@ public class CollectionActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.ac_collection_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.ac_collection_iv_back)
+    ImageView imageViewBack;
 
-    private HotMovieAdapter adapter;
+    private CollectionAdapter adapter;
     private List<Movie> movieList;
 
     @Override
@@ -35,14 +40,24 @@ public class CollectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_collection);
         ButterKnife.bind(this);
         initData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initData(){
         movieList = LitePal.findAll(Movie.class,true); //从本地数据库中获取 收藏的电影信息
-        adapter = new HotMovieAdapter(this,movieList,0);
+        adapter = new CollectionAdapter(this,movieList);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        adapter.setOnItemClickListener(new HotMovieAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CollectionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(CollectionActivity.this, MovieDetailActivity.class);

@@ -73,6 +73,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         initEvent();
         if (LitePal.isExist(Movie.class,"movieId = ?",movie.getMovieId())){
             defaultCollection = true;
+            isCollection = true;   ///已经收藏的话，默认持续保持收藏
             actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
         }
     }
@@ -186,7 +187,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                     actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
                 }else {
                     Toast.makeText(MovieDetailActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
-                    actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang_yes);
+                    actionButtonShoucang.setImageResource(R.drawable.movie_detail_fab_shoucang);
                 }
             }
         });
@@ -195,8 +196,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MovieDetailActivity.this,ReviewActivity.class);
-                intent.putExtra("movieId",movie.getMovieId());  //将电影的id传过去，用于获取电影评论
-                intent.putExtra("movieName",movie.getTitle());
+                intent.putExtra("movie",movie);  //将电影对象传过去，用于获取电影评论
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }

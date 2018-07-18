@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LitePal.initialize(this);   //初始化litepal
-        LitePal.deleteAll(Movie.class);
-        LitePal.deleteAll(Rating.class);
-        LitePal.deleteAll(Celebrity.class);
         Bmob.initialize(this, "8ef4da5b5730f6c7c70dc08e9d6e6373");
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //取消半透明

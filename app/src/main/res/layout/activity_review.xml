@@ -39,8 +39,41 @@
         android:id="@+id/ac_review_rv"
         android:layout_below="@id/ac_review_tb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_above="@id/ac_review_tb_bottom">
     </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ac_review_tb_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        app:contentInsetStart="0dp"
+        android:background="#eaeaea">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/ac_review_tb_bottom_et"
+                android:layout_toStartOf="@id/ac_review_tb_bottom_iv"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/review_edit_bg"
+                android:padding="8dp"
+                android:hint="说点什么把"
+                android:textSize="14sp"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/ac_review_tb_bottom_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/send"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

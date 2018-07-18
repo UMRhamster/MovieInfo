@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.whut.umrhamster.movieinfo.R;
@@ -89,27 +90,33 @@ public class PersonalFragment extends Fragment {
         relativeLayoutShouCang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CollectionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
-                startActivity(intent);
+                if (permissionCheck()){
+                    Intent intent = new Intent(getActivity(), CollectionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
+                    startActivity(intent);
+                }
             }
         });
         //进入我的评论
         relativeLayoutPinglun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReviewActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
-                startActivity(intent);
+                if (permissionCheck()){
+                    Intent intent = new Intent(getActivity(), ReviewActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
+                    startActivity(intent);
+                }
             }
         });
         //进入修改信息
         relativeLayoutMiMa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReInfoActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
-                startActivity(intent);
+                if (permissionCheck()){
+                    Intent intent = new Intent(getActivity(), ReInfoActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
+                    startActivity(intent);
+                }
             }
         });
         //注销
@@ -117,7 +124,11 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //进入登陆界面，并清楚sharepreference和数据库中的数据
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                if (permissionCheck()){
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
             }
         });
         //关于
@@ -140,11 +151,11 @@ public class PersonalFragment extends Fragment {
                     Matisse.from(getActivity())
                             .choose(MimeType.allOf())
                             .countable(true)
-                            .maxSelectable(9)
+                            .maxSelectable(1)
                             .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f)
-                            .imageEngine(new PicassoEngine())
+                            .imageEngine(new GlideEngine())
                             .forResult(REQUEST_CODE_CHOOSE);
                 }
             }
@@ -180,5 +191,14 @@ public class PersonalFragment extends Fragment {
         }
 
         Log.d("Fragment","onresume");
+    }
+
+    //权限验证
+    private boolean permissionCheck(){
+        if (!SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
+            return true;
+        }
+        Toast.makeText(getActivity(),"请先进行登陆或注册",Toast.LENGTH_SHORT).show();
+        return false;
     }
 }
