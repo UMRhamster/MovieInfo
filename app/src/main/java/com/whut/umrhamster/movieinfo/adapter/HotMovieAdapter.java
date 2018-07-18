@@ -72,7 +72,7 @@ public class HotMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof  ViewHolder){
             Movie movieTemp = movieList.get(position-1);
-            Picasso.get().load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
+            Picasso.with(context).load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
             ((ViewHolder) holder).textViewTitle.setText(movieTemp.getTitle());
             String[] genres = movieTemp.getGenres().split("、");
             ((ViewHolder) holder).textViewGenres.setText(genres[0]); //只取第一个标签

@@ -21,9 +21,6 @@ import java.util.List;
  */
 
 public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private static final int TYPE_FOOTER = 0;
-    private static final int TYPE_ITEM = 1;
-    private int showStatus =0;   //上拉加载条目 状态
 
     private Context context;
     private List<Movie> movieList;
@@ -35,69 +32,40 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM){   //正常条目
-            View view = LayoutInflater.from(context).inflate(R.layout.custom_rv_item_hot,parent,false);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onItemClick((int)view.getTag());
-                }
-            });
-            HotMovieAdapter.ViewHolder holder = new HotMovieAdapter.ViewHolder(view);
-            return holder;
-        }else if (viewType == TYPE_FOOTER){   //上拉加载条目
-            View view = LayoutInflater.from(context).inflate(R.layout.custom_rv_footer,parent,false);
-            HotMovieAdapter.FooterViewHolder footerViewHolder = new HotMovieAdapter.FooterViewHolder(view);
-            return footerViewHolder;
-        }else {
-            return null;
-        }
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_rv_item_hot,parent,false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick((int)view.getTag());
+            }
+        });
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof  ViewHolder){
-            Movie movieTemp = movieList.get(position);
-            Picasso.get().load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
-            ((ViewHolder) holder).textViewTitle.setText(movieTemp.getTitle());
-            String[] genres = movieTemp.getGenres().split("、");
-            ((ViewHolder) holder).textViewGenres.setText(genres[0]); //只取第一个标签
+        Movie movieTemp = movieList.get(position);
+        Picasso.with(context).load(movieTemp.getImages()).into(((ViewHolder) holder).imageViewPost);
+        ((ViewHolder) holder).textViewTitle.setText(movieTemp.getTitle());
+        String[] genres = movieTemp.getGenres().split("、");
+        ((ViewHolder) holder).textViewGenres.setText(genres[0]); //只取第一个标签
 
-            ((ViewHolder) holder).textViewSummary.setText(movieTemp.getSummary());
-            ((ViewHolder) holder).textViewPinglun.setText(String.format(context.getResources().getString(R.string.rating_count),movieTemp.getRating_count()));
-            ((ViewHolder) holder).textViewXiangkan.setText(String.format(context.getResources().getString(R.string.wish_count),movieTemp.getWish_count()));
-            ((ViewHolder) holder).textViewKanguo.setText(String.format(context.getResources().getString(R.string.collect_count),movieTemp.getCollect_count()));
-            ((ViewHolder) holder).textViewYear.setText(String.format(context.getResources().getString(R.string.year),movieTemp.getYear()));
+        ((ViewHolder) holder).textViewSummary.setText(movieTemp.getSummary());
+        ((ViewHolder) holder).textViewPinglun.setText(String.format(context.getResources().getString(R.string.rating_count),movieTemp.getRating_count()));
+        ((ViewHolder) holder).textViewXiangkan.setText(String.format(context.getResources().getString(R.string.wish_count),movieTemp.getWish_count()));
+        ((ViewHolder) holder).textViewKanguo.setText(String.format(context.getResources().getString(R.string.collect_count),movieTemp.getCollect_count()));
+        ((ViewHolder) holder).textViewYear.setText(String.format(context.getResources().getString(R.string.year),movieTemp.getYear()));
 
-            ((ViewHolder) holder).textViewRank.setVisibility(View.GONE);
-            ((ViewHolder) holder).imageViewRank.setVisibility(View.GONE);
-        }else if (holder instanceof  FooterViewHolder){
-            if (showStatus == 0){
-                ((FooterViewHolder) holder).textView.setText("松开手指进行加载");
-                ((FooterViewHolder) holder).progressBar.setVisibility(View.GONE);
-            }else if (showStatus == 1){
-                ((FooterViewHolder) holder).textView.setText("正在加载...");
-                ((FooterViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
-            }else {
-                ((FooterViewHolder) holder).textView.setText("已经没有更多了");
-                ((FooterViewHolder) holder).progressBar.setVisibility(View.GONE);
-            }
-        }
+        ((ViewHolder) holder).textViewRank.setVisibility(View.GONE);
+        ((ViewHolder) holder).imageViewRank.setVisibility(View.GONE);
         holder.itemView.setTag(position);
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position  == movieList.size()){
-            return TYPE_FOOTER;
-        }else {
-            return TYPE_ITEM;
-        }
-    }
 
     @Override
     public int getItemCount() {
-        return movieList.isEmpty()?0:movieList.size()+1;
+        return movieList.isEmpty()?0:movieList.size();
     }
     //正常条目
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -124,21 +92,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             imageViewRank = itemView.findViewById(R.id.rv_item_hot_rank_iv);
             textViewRank = itemView.findViewById(R.id.rv_item_hot_rank_tv);
         }
-    }
-    //上啦加载条目
-    static class FooterViewHolder extends RecyclerView.ViewHolder{
-        ProgressBar progressBar;
-        TextView textView;
-        public FooterViewHolder(View itemView) {
-            super(itemView);
-            progressBar = itemView.findViewById(R.id.custom_rv_footer_pb);
-            textView = itemView.findViewById(R.id.custom_rv_footer_tv);
-        }
-    }
-    //改变上拉加载条目状态
-    public void changeShowStatus(int value){
-        showStatus = value;
-        notifyItemChanged(movieList.size());
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){

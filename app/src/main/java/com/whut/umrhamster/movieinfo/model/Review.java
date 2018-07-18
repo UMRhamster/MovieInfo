@@ -14,6 +14,7 @@ public class Review extends BmobObject implements Serializable{
     private String movieId; //电影
     private String movieName; //电影名
     private String userId;  //用户名
+    private String userName;  //用户名称
     private BmobDate date;    //时间
     private String content; //内容
 
@@ -65,5 +66,13 @@ public class Review extends BmobObject implements Serializable{
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

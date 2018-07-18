@@ -110,8 +110,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
     private void initData(){
         movie = (Movie) getIntent().getSerializableExtra("movie");
-        Picasso.get().load(movie.getImages()).transform(new BlurTransformation(this)).into(imageViewBlur);
-        Picasso.get().load(movie.getImages()).into(imageViewPost);
+        Picasso.with(MovieDetailActivity.this).load(movie.getImages()).transform(new BlurTransformation(this)).into(imageViewBlur);
+        Picasso.with(MovieDetailActivity.this).load(movie.getImages()).into(imageViewPost);
         textViewTile.setText(movie.getTitle());
         textViewOriginalTitle.setText(movie.getOriginal_title());
         ratingBar.setRating(movie.getRating().getAverage()/2);
@@ -142,7 +142,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             ImageView imageViewImg = view.findViewById(R.id.celebrity_item_iv);
             textViewName.setText(celebrity.getName());
             if (!celebrity.getAvatars().equals("无")){
-                Picasso.get().load(celebrity.getAvatars()).into(imageViewImg);
+                Picasso.with(MovieDetailActivity.this).load(celebrity.getAvatars()).into(imageViewImg);
             }
             view.setOnClickListener(new View.OnClickListener() {   //演职人员 卡片点击事件，跳转外部浏览器
                 @Override
@@ -199,6 +199,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 intent.putExtra("movie",movie);  //将电影对象传过去，用于获取电影评论
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_do_nothing);
             }
         });
     }
@@ -225,5 +226,14 @@ public class MovieDetailActivity extends AppCompatActivity {
                 LitePal.deleteAll(Movie.class,"movieId = ?",movie.getMovieId());
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isCollection && defaultCollection){
+            setResult(22);
+        }
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_do_nothing,R.anim.anim_fg_back_out);
     }
 }

@@ -13,7 +13,6 @@
         android:lines="1"
         android:ellipsize="end"
         android:layout_toStartOf="@id/custom_rv_item_search_search_genres"
-        android:text="新大头儿子和小头爸爸"
         android:textColor="@android:color/black"/>
     <TextView
         android:paddingTop="8dp"
@@ -21,8 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:paddingEnd="8dp"
-        android:text="喜剧"/>
+        android:paddingEnd="8dp" />
     <RelativeLayout
         android:id="@+id/custom_rv_item_search_search_rl"
         android:layout_below="@id/custom_rv_item_search_search_title"
@@ -41,7 +39,6 @@
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:textSize="10sp"
-            android:text="2018"
             android:textColor="@android:color/white"/>
         <ImageView
             android:id="@+id/custom_rv_item_search_search_rl_dir_iv"
@@ -58,8 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/custom_rv_item_search_search_rl_dir_iv"
             android:maxLines="2"
-            android:ellipsize="end"
-            android:text="张艺谋"/>
+            android:ellipsize="end" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

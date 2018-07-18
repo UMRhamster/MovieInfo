@@ -52,6 +52,7 @@ public class WebViewActivity extends AppCompatActivity {
             webView.goBack();
         }else {
             finish();
+            overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
         }
     }
 }

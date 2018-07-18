@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/fragment_personal_iv_bg"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_centerHorizontal="true"
-                android:text="点击登陆"
+                android:text="@string/tologin"
                 android:padding="10dp"
                 android:textColor="@android:color/white"/>
             <LinearLayout
@@ -49,13 +50,14 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
                     <ImageView
+                        android:contentDescription="@null"
                         android:id="@+id/fragment_personal_iv_shoucang"
                         android:src="@drawable/personal_shoucang"
                         style="@style/personalImg"/>
                     <TextView
                         android:id="@+id/fragment_personal_tv_shouchang"
                         android:layout_toEndOf="@id/fragment_personal_iv_shoucang"
-                        android:text="我的收藏"
+                        android:text="@string/mycollection"
                         style="@style/personalTv"/>
                     <View
                         android:layout_alignStart="@id/fragment_personal_tv_shouchang"
@@ -72,13 +74,14 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
                     <ImageView
+                        android:contentDescription="@null"
                         android:id="@+id/fragment_personal_iv_pinglun"
                         android:src="@drawable/personal_pinglun"
                         style="@style/personalImg"/>
                     <TextView
                         android:id="@+id/fragment_personal_tv_pinglun"
                         android:layout_toEndOf="@id/fragment_personal_iv_pinglun"
-                        android:text="我的评论"
+                        android:text="@string/myreview"
                         style="@style/personalTv"/>
                     <View
                         android:layout_alignStart="@id/fragment_personal_tv_pinglun"
@@ -95,13 +98,14 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
                     <ImageView
+                        android:contentDescription="@null"
                         android:id="@+id/fragment_personal_iv_mima"
                         android:src="@drawable/personal_mima"
                         style="@style/personalImg"/>
                     <TextView
                         android:id="@+id/fragment_personal_tv_mima"
                         android:layout_toEndOf="@id/fragment_personal_iv_mima"
-                        android:text="修改信息"
+                        android:text="@string/reinfo"
                         style="@style/personalTv"/>
                 </RelativeLayout>
                 <View
@@ -116,13 +120,14 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
                     <ImageView
+                        android:contentDescription="@null"
                         android:id="@+id/fragment_personal_iv_zhuxiao"
                         android:src="@drawable/personal_zhuxiao"
                         style="@style/personalImg"/>
                     <TextView
                         android:id="@+id/fragment_personal_tv_zhuxiao"
                         android:layout_toEndOf="@id/fragment_personal_iv_zhuxiao"
-                        android:text="注销"
+                        android:text="@string/zhuxiao"
                         style="@style/personalTv"/>
                     <View
                         android:layout_alignStart="@id/fragment_personal_tv_zhuxiao"
@@ -139,13 +144,14 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
                     <ImageView
+                        android:contentDescription="@null"
                         android:id="@+id/fragment_personal_iv_guanyu"
                         android:src="@drawable/personal_guanyu"
                         style="@style/personalImg"/>
                     <TextView
                         android:id="@+id/fragment_personal_tv_guanyu"
                         android:layout_toEndOf="@id/fragment_personal_iv_guanyu"
-                        android:text="关于"
+                        android:text="@string/about"
                         style="@style/personalTv"/>
                     <View
                         android:layout_alignStart="@id/fragment_personal_tv_guanyu"

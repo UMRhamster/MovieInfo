@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieInfo</string>
+    <string name="app_name">墨鱼影讯</string>
     <string name="hot">正在热映</string>
     <string name="late">即将上映</string>
     <string name="top">TOP250</string>
@@ -20,4 +20,49 @@
 
 
     <string name="review_movie">《%1$s》</string>
+
+    <!--login-->
+    <string name="tosignup">New here? Sign Up</string>
+    <string name="login">LOGIN</string>
+    <!--detail-->
+    <string name="jianjie">简介：</string>
+    <string name="yanzhirenyuan">演职人员：</string>
+    <!--re-->
+    <string name="yuanmima">原密码&#8194;&#8194;：</string>
+    <string name="xinmima">新密码&#8194;&#8194;：</string>
+    <string name="querenmima_re">确认密码：</string>
+    <string name="nicheng">昵称</string>
+    <string name="xiugaixinxi">修改信息</string>
+    <string name="loadingMore">正在加载更多</string>
+    <!--pinglun-->
+    <string name="say_something">说点什么吧~</string>
+    <!--search-->
+    <string name="search_tip">搜索内容</string>
+    <!--signup-->
+    <string name="singup_name">用&#8194;户&#8194;名</string>
+    <string name="sign_check_tv">16位英文、数字</string>
+    <string name="sign_check_tv_20">20位中文、英文</string>
+    <string name="signup_nickname">昵&#8194;&#8194;&#8194;&#8194;称</string>
+    <string name="signup_mima">密&#8194;&#8194;&#8194;&#8194;码</string>
+    <string name="signup_querenmima">确认密码</string>
+    <string name="zhuce">注&#8194;&#8194;&#8194;&#8194;册</string>
+    <string name="qianwangdenglu">前往登录</string>
+    <!--personal-->
+    <string name="zhuxiao">注销</string>
+    <string name="reinfo">修改信息</string>
+    <string name="myreview">我的评论</string>
+    <string name="mycollection">我的收藏</string>
+    <string name="tologin">点击登录</string>
+    <!--search-->
+    <string name="search_history">搜索历史</string>
+    <string name="search_history_record">搜索历史记录</string>
+    
+    <!--about_activity-->
+    <string name="tip_title">Tips：</string>
+    <string name="about">关于</string>
+    <string name="tip_content">如果您在使用本产品时\n发生任何闪退、无响应等问题\n那肯定不是本产品的问题\n本产品数据来源于豆瓣API\n受API访问限制\n请尽量减少刷新次数~</string>
+    <string name="address_title">项目地址：</string>
+    <string name="gitHub_url">https://github.com/UMRhamster/MovieInfo</string>
+    <string name="contact_title">联系我们：</string>
+    <string name="contact_mail">1242127559@qq.com</string>
 </resources>

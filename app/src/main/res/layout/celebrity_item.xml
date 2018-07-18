@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/celebrity_item_iv"
         android:layout_width="60dp"
         android:layout_height="84dp"
@@ -20,7 +21,6 @@
         android:layout_alignEnd="@id/celebrity_item_iv"
         android:layout_alignBottom="@id/celebrity_item_iv"
         android:gravity="center"
-        android:text="姜文"
         android:lines="1"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
@@ -33,7 +33,6 @@
         android:layout_alignStart="@id/celebrity_item_iv"
         android:layout_alignEnd="@id/celebrity_item_iv"
         android:gravity="center"
-        android:text="演员"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
         android:layout_below="@id/celebrity_item_name"/>

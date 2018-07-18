@@ -18,6 +18,7 @@
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical">
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/ac_about_iv_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -30,33 +31,100 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="关于"
+                android:text="@string/about"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <TextView
-        android:id="@+id/ac_about_address_title"
+    <ScrollView
         android:layout_below="@id/ac_about_tb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="项目地址："/>
-    <TextView
-        android:id="@+id/ac_about_address_content"
-        android:layout_below="@id/ac_about_address_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="https://github.com/UMRhamster/MovieInfo"/>
-    <TextView
-        android:id="@+id/ac_about_contact_title"
-        android:layout_below="@id/ac_about_address_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="联系我们："/>
-    <TextView
-        android:id="@+id/ac_about_contact_content"
-        android:layout_below="@id/ac_about_contact_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1242127559@qq.com"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/ac_about_icon"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/moyu_trans"/>
+            <TextView
+                android:id="@+id/ac_about_tips"
+                android:layout_below="@id/ac_about_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="4dp"
+                android:text="@string/tip_title"/>
+            <TextView
+                android:id="@+id/ac_about_tips_content"
+                android:layout_below="@id/ac_about_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/tip_content"/>
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/ac_about_address_iv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/ac_about_tips_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/github"/>
+            <TextView
+                android:id="@+id/ac_about_address_title"
+                android:layout_below="@id/ac_about_address_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/address_title"/>
+            <TextView
+                android:id="@+id/ac_about_address_content"
+                android:layout_below="@id/ac_about_address_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:onClick="toGitHub"
+                android:text="@string/gitHub_url"/>
+            <TextView
+                android:id="@+id/ac_about_contact_title"
+                android:layout_below="@id/ac_about_address_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:text="@string/contact_title"/>
+            <TextView
+                android:id="@+id/ac_about_contact_content"
+                android:layout_below="@id/ac_about_contact_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:text="@string/contact_mail"/>
+            <TextView
+                android:id="@+id/ac_about_tec_title"
+                android:layout_below="@id/ac_about_contact_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="技术支持："/>
+            <TextView
+                android:layout_below="@id/ac_about_tec_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="OKHttp\nPicasso\nBmob\nButterKnife"/>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

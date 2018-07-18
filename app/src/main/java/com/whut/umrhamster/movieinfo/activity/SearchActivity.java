@@ -79,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
         transaction.commit();
     }
     private void initView(){
-        List<String> dataSet = new LinkedList<>(Arrays.asList("导演", "类型"));
+        List<String> dataSet = new LinkedList<>(Arrays.asList("关键字", "标签"));
         niceSpinner.attachDataSource(dataSet);
     }
 
@@ -180,5 +180,11 @@ public class SearchActivity extends AppCompatActivity {
     }
     public String getEditContent(){
         return editText.getText().toString();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
     }
 }

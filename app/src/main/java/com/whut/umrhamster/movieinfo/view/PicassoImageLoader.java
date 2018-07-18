@@ -13,6 +13,6 @@ import com.youth.banner.loader.ImageLoader;
 public class PicassoImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Picasso.get().load((String)path).into(imageView);
+        Picasso.with(context).load((String)path).into(imageView);
     }
 }

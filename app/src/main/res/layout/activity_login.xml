@@ -9,6 +9,7 @@
     tools:context="com.whut.umrhamster.movieinfo.activity.LoginActivity">
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/ac_login_icon"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/ac_login_rl_name_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -52,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/ac_login_rl_password_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -76,7 +79,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
         android:layout_marginTop="40dp"
-        android:text="LOGIN"
+        android:text="@string/login"
         android:padding="8dp"
         android:gravity="center"
         android:textSize="16sp"
@@ -91,6 +94,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:text="New here? Sign Up"/>
+        android:text="@string/tosignup"/>
 
 </RelativeLayout>

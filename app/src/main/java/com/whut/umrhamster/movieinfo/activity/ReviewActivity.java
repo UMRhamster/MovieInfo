@@ -85,6 +85,7 @@ public class ReviewActivity extends AppCompatActivity {
                 review.setContent(editTextBottom.getText().toString());   //设置评论内容
                 review.setUserId(SPUtil.loadData(ReviewActivity.this,"user","name"));   //设置用户名
                 review.setDate(new BmobDate(new Date()));    //设置评论时间
+                review.setUserName(SPUtil.loadData(ReviewActivity.this,"user","nickname")); //设置用户昵称
                 review.save(new SaveListener<String>() {   //提交评论至云数据库
                     @Override
                     public void done(String s, BmobException e) {
@@ -106,13 +107,13 @@ public class ReviewActivity extends AppCompatActivity {
         reviewList = new ArrayList<>();
         movie = (Movie) getIntent().getSerializableExtra("movie");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if (movie != null){  //说明是从电影详情界面进入，应当前是
+        if (movie != null){  //说明是从电影详情界面进入，应当显示
             toolbarBottom.setVisibility(View.VISIBLE);
+            textViewTitle.setText(movie.getTitle());
             adapter = new ReviewAdapter(this,reviewList,false);
             queryFromServer();
         }else {
             toolbarBottom.setVisibility(View.GONE);
-            textViewTitle.setText(movie.getTitle());
             adapter = new ReviewAdapter(this,reviewList,true);
             queryFromServerForSelf();
         }
@@ -167,10 +168,24 @@ public class ReviewActivity extends AppCompatActivity {
         });
     }
     private boolean checkReviewInput(String reviewInput){
+        if (SPUtil.loadData(ReviewActivity.this,"user","name").equals("@_@")){
+            Toast.makeText(ReviewActivity.this,"登陆之后才能进行此操作",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (!reviewInput.equals("")){
             return true;
         }
         Toast.makeText(ReviewActivity.this,"评论不能为空",Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (movie != null){
+            overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
+        }else {
+            overridePendingTransition(R.anim.anim_do_nothing,R.anim.anim_fg_back_out);
+        }
     }
 }

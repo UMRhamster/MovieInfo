@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //跳转注册界面
                 startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+                overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_do_nothing);
             }
         });
     }
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(LoginActivity.this,"登陆成功"+user.getName()+" "+user.getPassword(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
                             SPUtil.saveUser(LoginActivity.this,user);
                             String[] temp = user.getAvatars().split("/");
                             BmobFile file = new BmobFile(temp[temp.length-1],"",user.getAvatars());
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("user",user);
 //                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                         }
                     });
                 }

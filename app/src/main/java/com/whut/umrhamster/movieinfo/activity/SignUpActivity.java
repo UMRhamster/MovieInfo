@@ -119,10 +119,16 @@ public class SignUpActivity extends AppCompatActivity {
         if (nickName.equals("")){
             Toast.makeText(SignUpActivity.this,"昵称不能为空",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (nickName.matches("[a-zA-Z\u4e00-\u9fa5]+")){
+        }else if (!nickName.matches("[a-zA-Z\u4e00-\u9fa5]+")){
             Toast.makeText(SignUpActivity.this,"昵称不合法",Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_do_nothing,R.anim.anim_fg_back_out);
     }
 }

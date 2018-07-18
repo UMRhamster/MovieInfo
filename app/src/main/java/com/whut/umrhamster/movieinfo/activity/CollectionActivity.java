@@ -63,9 +63,26 @@ public class CollectionActivity extends AppCompatActivity {
                 Intent intent = new Intent(CollectionActivity.this, MovieDetailActivity.class);
                 intent.putExtra("movie",movieList.get(position));
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
-                startActivity(intent);
+                startActivityForResult(intent,11);
+                overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_do_nothing);
             }
         });
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode == 22){
+            movieList.clear();
+            movieList.addAll(LitePal.findAll(Movie.class,true));
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
     }
 }

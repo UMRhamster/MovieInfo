@@ -18,6 +18,7 @@
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical">
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/ac_review_iv_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -30,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="我的评论"
+                android:text="@string/myreview"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </RelativeLayout>
@@ -59,12 +60,13 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/review_edit_bg"
                 android:padding="8dp"
-                android:hint="说点什么把"
+                android:hint="@string/say_something"
                 android:textSize="14sp"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/ac_review_tb_bottom_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

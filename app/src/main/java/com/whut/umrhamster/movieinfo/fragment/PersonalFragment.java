@@ -94,6 +94,7 @@ public class PersonalFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), CollectionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                 }
             }
         });
@@ -105,6 +106,7 @@ public class PersonalFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), ReviewActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                 }
             }
         });
@@ -116,6 +118,7 @@ public class PersonalFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), ReInfoActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                 }
             }
         });
@@ -128,6 +131,7 @@ public class PersonalFragment extends Fragment {
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
                 }
             }
         });
@@ -138,6 +142,7 @@ public class PersonalFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AboutActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //栈顶复用
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
             }
         });
 
@@ -146,16 +151,18 @@ public class PersonalFragment extends Fragment {
             public void onClick(View view) {
                 if (SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
                     startActivity(new Intent(getActivity(),LoginActivity.class));
+                    getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                 }else {
                     //如果存在用户就进行头像上传
                     Matisse.from(getActivity())
-                            .choose(MimeType.allOf())
+                            .choose(MimeType.of(MimeType.PNG,MimeType.JPEG))
                             .countable(true)
                             .maxSelectable(1)
                             .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                            .theme(R.style.Matisse_Dracula)
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f)
-                            .imageEngine(new GlideEngine())
+                            .imageEngine(new PicassoEngine())
                             .forResult(REQUEST_CODE_CHOOSE);
                 }
             }
@@ -165,6 +172,7 @@ public class PersonalFragment extends Fragment {
             public void onClick(View view) {
                 if (SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
                     startActivity(new Intent(getActivity(),LoginActivity.class));
+                    getActivity().overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                 }
             }
         });
@@ -172,8 +180,14 @@ public class PersonalFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("dsadas","dsa");
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+        if (data != null){
+            Log.d("Persnalllll","收到数据啦");
+        }else {
+            Log.d("Persnalllll","没收到数据");
+        }
+        if (requestCode == REQUEST_CODE_CHOOSE) {
             mSelected = Matisse.obtainResult(data);
             Log.d("Matisse", "mSelected: " + mSelected);
         }
@@ -184,7 +198,7 @@ public class PersonalFragment extends Fragment {
         super.onResume();
         if (!SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
             textViewName.setText(SPUtil.loadData(getActivity(),"user","nickname"));
-            Picasso.get().load(SPUtil.loadData(getActivity(),"user","avatars")).transform(new BlurTransformation(getActivity())).into(imageViewBG);
+            Picasso.with(getActivity()).load(SPUtil.loadData(getActivity(),"user","avatars")).transform(new BlurTransformation(getActivity())).into(imageViewBG);
 
             Bitmap bitmap = BitmapFactory.decodeFile(SPUtil.loadData(getActivity(),"user","local_avatars"));
             circleImageView.setImageBitmap(bitmap);

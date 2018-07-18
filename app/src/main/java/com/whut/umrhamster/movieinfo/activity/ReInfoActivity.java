@@ -120,6 +120,8 @@ public class ReInfoActivity extends AppCompatActivity {
                         @Override
                         public void done(BmobException e) {
                             if (e == null){
+                                SPUtil.saveData(ReInfoActivity.this,"user","nickname",editTextNiCheng.getText().toString());
+                                SPUtil.saveData(ReInfoActivity.this,"user","password",editTextQueRen.getText().toString());
                                 Toast.makeText(ReInfoActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
                             }else {
                                 Toast.makeText(ReInfoActivity.this,"修改失败",Toast.LENGTH_SHORT).show();
@@ -129,5 +131,11 @@ public class ReInfoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_fg_back_enter,R.anim.anim_fg_back_out);
     }
 }
