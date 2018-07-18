@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/ac_main_tb"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:background="@color/themeDarkPurple"
         android:fitsSystemWindows="true"
         app:contentInsetStart="0dp">
@@ -35,6 +35,28 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"/>
+            <LinearLayout
+                android:layout_below="@id/ac_main_tb_tv"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:contentDescription="@null"
+                    android:id="@+id/ac_main_tb_location_iv"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/location"/>
+                <TextView
+                    android:id="@+id/ac_main_tb_location_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:text="北京"/>
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <android.support.v4.view.ViewPager

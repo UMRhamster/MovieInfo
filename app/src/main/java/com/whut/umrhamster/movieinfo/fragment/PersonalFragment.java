@@ -128,6 +128,7 @@ public class PersonalFragment extends Fragment {
             public void onClick(View view) {
                 //进入登陆界面，并清楚sharepreference和数据库中的数据
                 if (permissionCheck()){
+                    SPUtil.deleteUser(getActivity());
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
@@ -196,12 +197,29 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("user-name",SPUtil.loadData(getActivity(),"user","name"));
         if (!SPUtil.loadData(getActivity(),"user","name").equals("@_@")){
+            Log.d("PersonalFragment","用户已登录");
             textViewName.setText(SPUtil.loadData(getActivity(),"user","nickname"));
-            Picasso.with(getActivity()).load(SPUtil.loadData(getActivity(),"user","avatars")).transform(new BlurTransformation(getActivity())).into(imageViewBG);
-
-            Bitmap bitmap = BitmapFactory.decodeFile(SPUtil.loadData(getActivity(),"user","local_avatars"));
-            circleImageView.setImageBitmap(bitmap);
+            Picasso.with(getActivity())
+                    .load(SPUtil.loadData(getActivity(),"user","avatars"))
+                    .placeholder(R.mipmap.default_blur_bg)   //设置默认图片
+                    .transform(new BlurTransformation(getActivity()))
+                    .into(imageViewBG);
+            if (SPUtil.loadData(getActivity(),"user","local_avatars").equals("@_@")){
+                circleImageView.setImageResource(R.drawable.default_user_icon);
+            }else {
+                Bitmap bitmap = BitmapFactory.decodeFile(SPUtil.loadData(getActivity(),"user","local_avatars"));
+                circleImageView.setImageBitmap(bitmap);
+            }
+        }else {
+            Log.d("暂未登录","设置默认图片");
+            textViewName.setText("点击登录");
+            circleImageView.setImageResource(R.drawable.default_user_icon);
+            Picasso.with(getActivity())
+                    .load(R.mipmap.default_blur_bg)
+                    .transform(new BlurTransformation(getActivity()))
+                    .into(imageViewBG);
         }
 
         Log.d("Fragment","onresume");

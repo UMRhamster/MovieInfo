@@ -17,14 +17,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/celebrity_item_zanwu"/>
+                android:src="@mipmap/default_blur_bg"/>
             <com.whut.umrhamster.movieinfo.view.CircleImageView
                 android:id="@+id/fragment_personal_civ"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/celebrity_item_zanwu"
+                android:src="@drawable/default_user_icon"
                 app:border_color="@android:color/white"
                 app:border_width="1dp"/>
             <TextView

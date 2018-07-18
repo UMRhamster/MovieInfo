@@ -61,7 +61,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void done(final List<User> list, BmobException e) {
                     if (e == null && list.size()>0){
-                        Picasso.with(context).load(list.get(0).getAvatars()).into(((ViewHolder)holder).circleImageView);
+                        Picasso.with(context).load(list.get(0).getAvatars()).placeholder(R.drawable.default_user_icon).into(((ViewHolder)holder).circleImageView);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -72,7 +72,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             });
         }else {
-            Picasso.with(context).load(new File(SPUtil.loadData(context,"user","local_avatars"))).into(((ViewHolder)holder).circleImageView); //使用Picasso加载本地图片
+            Picasso.with(context).load(new File(SPUtil.loadData(context,"user","local_avatars"))).placeholder(R.drawable.default_user_icon).into(((ViewHolder)holder).circleImageView); //使用Picasso加载本地图片
             ((ViewHolder)holder).textViewMovie.setVisibility(View.VISIBLE);
             ((ViewHolder)holder).textViewName.setText(SPUtil.loadData(context,"user","nickname"));
             ((ViewHolder)holder).textViewMovie.setText(context.getResources().getString(R.string.review_movie,reviewList.get(position).getMovieName()));

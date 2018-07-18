@@ -9,11 +9,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.adapter.MainFragmentPagerAdapter;
 import com.whut.umrhamster.movieinfo.fragment.BoxMovieFragment;
@@ -23,6 +29,7 @@ import com.whut.umrhamster.movieinfo.fragment.PersonalFragment;
 import com.whut.umrhamster.movieinfo.fragment.SoonMovieFragment;
 import com.whut.umrhamster.movieinfo.model.Celebrity;
 import com.whut.umrhamster.movieinfo.model.Rating;
+import com.whut.umrhamster.movieinfo.util.MovieCountUtil;
 
 import org.litepal.LitePal;
 
@@ -44,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.ac_main_search)
     ImageView imageViewSearch;
+    @BindView(R.id.ac_main_tb_location_iv)
+    ImageView imageViewLocation;
+    @BindView(R.id.ac_main_tb_location_tv)
+    TextView textViewLocation;
+
+    public LocationClient locationClient;
+    private boolean isLocated = false;
+    private String location = "北京";
 
     private MainFragmentPagerAdapter adapter;
     private List<Fragment> fragmentList;
@@ -82,6 +97,18 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         setTabs(tabLayout,TAB_ICONS);
 
+        locationClient = new LocationClient(getApplicationContext());
+        locationClient.registerLocationListener(new MyLocationListener());
+        initLocation();
+        locationClient.start();
+
+    }
+    //初始化百度定位设置
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setScanSpan(3000);
+        option.setIsNeedAddress(true);
+        locationClient.setLocOption(option);
     }
     //初始化事件
     private void initEvent(){
@@ -94,6 +121,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 textViewTitle.setText(TAB_TITLES[position]);
+                if (position == 0){
+                    imageViewLocation.setVisibility(View.VISIBLE);
+                    textViewLocation.setText(location);
+                }else {
+                    imageViewLocation.setVisibility(View.GONE);
+                }
+                switch (position){
+                    case 1:
+                        textViewLocation.setText("共"+ MovieCountUtil.soonMovieCount+"部电影");
+                        break;
+                    case 2:
+                        textViewLocation.setText("共"+ MovieCountUtil.topMovieCount+"部电影");
+                        break;
+                    case 3:
+                        textViewLocation.setText("共"+ MovieCountUtil.boxMovieCount+"部电影");
+                        break;
+                }
                 if (position == 4){
                     toolbar.setVisibility(View.GONE);
                 }else {
@@ -123,5 +167,24 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabImgs[2]);
         tabLayout.getTabAt(3).setIcon(tabImgs[3]);
         tabLayout.getTabAt(4).setIcon(tabImgs[4]);
+    }
+
+    public class MyLocationListener extends BDAbstractLocationListener{
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            if (!isLocated){
+                location = bdLocation.getCity().substring(0,bdLocation.getCity().length()-1);
+                textViewLocation.setText(location);
+                if (fragmentList.get(0).isVisible()){
+                    ((HotMovieFragment)fragmentList.get(0)).initData();
+                    isLocated = true;
+                }
+//                isLocated = true; //只定位一次
+            }
+        }
+    }
+    public String getTitleBelow(){
+        return textViewTitle.getText().toString();
     }
 }

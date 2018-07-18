@@ -127,9 +127,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         addCelebrityItem(movie.getDirectors(),"导演");
         addCelebrityItem(movie.getCasts(),"主演");
 
-        if (movie.getRating_count() > 0){
-//            textViewPinglun.setText(movie.getRating_count());
-        }
         //还需要判断是否收藏...
 
     }

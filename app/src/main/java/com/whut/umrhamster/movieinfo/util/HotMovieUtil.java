@@ -27,6 +27,15 @@ public class HotMovieUtil {
             for (int i=0;i<jsonArray.length();i++){
                 movieList.add(jsonArray.getJSONObject(i).getString("id"));
             }
+            if (jsonObject.getString("title").matches("即将上映的电影")){
+                MovieCountUtil.soonMovieCount = jsonObject.getInt("total");
+            }else if (jsonObject.getString("title").matches("正在上映的电影")){
+                MovieCountUtil.hotMovieCount = jsonObject.getInt("total");
+            }else if (jsonObject.getString("title").matches("豆瓣电影Top250")){
+                MovieCountUtil.topMovieCount = jsonObject.getInt("total");
+            }else{
+                MovieCountUtil.boxMovieCount = 11;  //固定11
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

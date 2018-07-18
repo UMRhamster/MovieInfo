@@ -21,6 +21,7 @@ import com.whut.umrhamster.movieinfo.util.HotMovieUtil;
 import com.whut.umrhamster.movieinfo.util.HttpUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +98,15 @@ public class BoxMovieFragment extends Fragment {
                 List<String> idList = HotMovieUtil.getBoxMovie(hotJson);
                 int count = 0;
                 for (String id : idList){
-                    String movieJson = HttpUtil.getMovieById(id);
+                    String movieJson = null;
+                    try {
+                        movieJson = HttpUtil.getMovieById(id);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                        return;
+                    }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
                     if (++count%4 == 0 || count == idList.size()){
                         handler.post(new Runnable() {
@@ -162,7 +171,15 @@ public class BoxMovieFragment extends Fragment {
                                 List<String> idList = HotMovieUtil.getHotMovies(hotJson); //解析出id
                                 int count = 0;
                                 for (String id : idList){
-                                    String movieJson = HttpUtil.getMovieById(id);
+                                    String movieJson = null;
+                                    try {
+                                        movieJson = HttpUtil.getMovieById(id);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        adapter.notifyDataSetChanged();
+                                        refreshLayout.setRefreshing(false);
+                                        return;
+                                    }
                                     count++;
                                     if (count <= 4 ){  //前四条数据放入临时容器
                                         movieListTemp.add(MovieUtil.Json2Movie(movieJson));
@@ -207,7 +224,15 @@ public class BoxMovieFragment extends Fragment {
                 }
                 final List<String> idList = HotMovieUtil.getHotMovies(hotJson); //解析出id
                 for (String id : idList){
-                    String movieJson = HttpUtil.getMovieById(id);
+                    String movieJson = null;
+                    try {
+                        movieJson = HttpUtil.getMovieById(id);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                        return;
+                    }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
                 }
                 handler.post(new Runnable() {

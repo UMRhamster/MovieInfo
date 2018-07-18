@@ -83,18 +83,13 @@ public class HttpUtil {
 
     //获取电影条目信息
     //id - 电影的id
-    public static String getMovieById(String id){
+    public static String getMovieById(String id) throws IOException {
         Request request = new Request.Builder()
                 .url("http://api.douban.com/v2/movie/subject/"+id)
                 .build();
         Response response = null;
-        try {
-            response = okHttpClient.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        response = okHttpClient.newCall(request).execute();
+        return response.body().string();
     }
 
     //通过搜索获取电影信息

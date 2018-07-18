@@ -31,4 +31,12 @@ public class SPUtil {
         saveData(context,"user","avatars",user.getAvatars());
         saveData(context,"user","collection",user.getMovieCollected());
     }
+
+    public static void deleteUser(Context context){
+        saveData(context,"user","name","@_@");
+        saveData(context,"user","password","@_@");
+        saveData(context,"user","nickname","@_@");
+        saveData(context,"user","avatars","@_@");
+        saveData(context,"user","collection","@_@");
+    }
 }

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 
 import com.whut.umrhamster.movieinfo.R;
+import com.whut.umrhamster.movieinfo.activity.MainActivity;
 import com.whut.umrhamster.movieinfo.activity.MovieDetailActivity;
 import com.whut.umrhamster.movieinfo.adapter.HotMovieAdapter;
 import com.whut.umrhamster.movieinfo.model.Movie;
@@ -72,7 +73,7 @@ public class HotMovieFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_movie_hot,container,false);
         initView(rootView);
         refreshLayout.setRefreshing(true);   //进入是显示刷新图标
-        initData();
+//        initData();
         initEvent();
         return rootView;
     }
@@ -98,12 +99,13 @@ public class HotMovieFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
     }
-    private void initData(){
+    public void initData(){
+        Log.d("gettitlevelow","test");
 //        movieList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String hotJson = HttpUtil.getHotMovie("长沙",0,10);
+                String hotJson = HttpUtil.getHotMovie(((MainActivity)getActivity()).getTitleBelow(),0,10);
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
                 }
@@ -113,7 +115,15 @@ public class HotMovieFragment extends Fragment {
                 }
                 int count = 0;
                 for (String id : idList){
-                    String movieJson = HttpUtil.getMovieById(id);
+                    String movieJson = null;
+                    try {
+                        movieJson = HttpUtil.getMovieById(id);   //此处可能由于API访问限制，抛出异常
+                    } catch (IOException e) {
+                        e.printStackTrace();    //如果产生异常，则不能继续获取数据，直接刷新已经解析出的数据
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                        return;
+                    }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
                     if (++count%4 == 0 || count == idList.size()){
                         handler.post(new Runnable() {
@@ -182,7 +192,15 @@ public class HotMovieFragment extends Fragment {
                                 }
                                 int count = 0;
                                 for (String id : idList){
-                                    String movieJson = HttpUtil.getMovieById(id);
+                                    String movieJson = null;
+                                    try {
+                                        movieJson = HttpUtil.getMovieById(id);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        adapter.notifyDataSetChanged();
+                                        refreshLayout.setRefreshing(false);
+                                        return;
+                                    }
                                     count++;
                                     if (count <= 4 ){  //前四条数据放入临时容器
                                         movieListTemp.add(MovieUtil.Json2Movie(movieJson));
@@ -228,7 +246,15 @@ public class HotMovieFragment extends Fragment {
                 final List<String> idList = HotMovieUtil.getHotMovies(hotJson); //解析出id
                 endMovie = endMovie + idList.size();
                 for (String id : idList){
-                    String movieJson = HttpUtil.getMovieById(id);
+                    String movieJson = null;
+                    try {
+                        movieJson = HttpUtil.getMovieById(id);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                        return;
+                    }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
                 }
                 handler.post(new Runnable() {
