@@ -17,6 +17,7 @@ import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.adapter.ReviewAdapter;
 import com.whut.umrhamster.movieinfo.model.Movie;
 import com.whut.umrhamster.movieinfo.model.Review;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 
 import org.litepal.LitePal;
@@ -107,6 +108,10 @@ public class ReviewActivity extends AppCompatActivity {
         reviewList = new ArrayList<>();
         movie = (Movie) getIntent().getSerializableExtra("movie");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (!NetUtil.checkNetState(ReviewActivity.this)){
+            Toast.makeText(ReviewActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (movie != null){  //说明是从电影详情界面进入，应当显示
             toolbarBottom.setVisibility(View.VISIBLE);
             textViewTitle.setText(movie.getTitle());

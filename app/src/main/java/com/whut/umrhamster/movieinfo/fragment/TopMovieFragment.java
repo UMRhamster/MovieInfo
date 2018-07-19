@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.activity.MovieDetailActivity;
@@ -21,6 +22,7 @@ import com.whut.umrhamster.movieinfo.model.Movie;
 import com.whut.umrhamster.movieinfo.util.HotMovieUtil;
 import com.whut.umrhamster.movieinfo.util.HttpUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,6 +95,16 @@ public class TopMovieFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (!NetUtil.checkNetState(getActivity())){
+                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    });
+                    return;
+                }
                 String hotJson = HttpUtil.getTop250Movie(0,10);
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
@@ -112,9 +124,9 @@ public class TopMovieFragment extends Fragment {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                refreshLayout.setRefreshing(false);
                             }
                         });
-                        refreshLayout.setRefreshing(false);
                         return;
                     }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
@@ -174,6 +186,16 @@ public class TopMovieFragment extends Fragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                if (!NetUtil.checkNetState(getActivity())){
+                                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            refreshLayout.setRefreshing(false);
+                                        }
+                                    });
+                                    return;
+                                }
                                 String hotJson = HttpUtil.getTop250Movie(0,10);
                                 if (hotJson == null){   //返回为空，一般情况为被封IP
                                     return;
@@ -193,9 +215,9 @@ public class TopMovieFragment extends Fragment {
                                             @Override
                                             public void run() {
                                                 adapter.notifyDataSetChanged();
+                                                refreshLayout.setRefreshing(false);
                                             }
                                         });
-                                        refreshLayout.setRefreshing(false);
                                         return;
                                     }
                                     count++;
@@ -236,6 +258,16 @@ public class TopMovieFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (!NetUtil.checkNetState(getActivity())){
+                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    });
+                    return;
+                }
                 String hotJson = HttpUtil.getTop250Movie(start,4);  //上拉加载每次最多请求4条
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
@@ -252,9 +284,9 @@ public class TopMovieFragment extends Fragment {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                refreshLayout.setRefreshing(false);
                             }
                         });
-                        refreshLayout.setRefreshing(false);
                         return;
                     }
                     movieList.add(MovieUtil.Json2Movie(movieJson));

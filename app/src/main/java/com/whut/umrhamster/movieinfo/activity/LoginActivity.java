@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.User;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 
 import java.util.ArrayList;
@@ -79,6 +80,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginCheck(String name, String password){
         if (!localCheck(name,password)){
+            return;
+        }
+        if (!NetUtil.checkNetState(LoginActivity.this)){
+            Toast.makeText(LoginActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
             return;
         }
         BmobQuery<User> queryName = new BmobQuery<>();

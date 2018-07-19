@@ -23,6 +23,7 @@ import com.whut.umrhamster.movieinfo.fragment.SearchResultFragment;
 import com.whut.umrhamster.movieinfo.model.MovieSimple;
 import com.whut.umrhamster.movieinfo.util.HttpUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 
 import org.angmarch.views.NiceSpinner;
@@ -95,6 +96,10 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 transaction.replace(R.id.ac_search_fl,resultFragment);
                 transaction.commit();
+                if (!NetUtil.checkNetState(SearchActivity.this)){
+                    Toast.makeText(SearchActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 resultFragment.searchMovie(niceSpinner.getSelectedIndex(),editText.getText().toString());
             }
         });

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.activity.MovieDetailActivity;
@@ -23,6 +24,7 @@ import com.whut.umrhamster.movieinfo.util.FileUtil;
 import com.whut.umrhamster.movieinfo.util.HotMovieUtil;
 import com.whut.umrhamster.movieinfo.util.HttpUtil;
 import com.whut.umrhamster.movieinfo.util.MovieUtil;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 
 import java.io.IOException;
@@ -98,6 +100,16 @@ public class SoonMovieFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (!NetUtil.checkNetState(getActivity())){
+                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    });
+                    return;
+                }
                 String hotJson = HttpUtil.getSoonMovie(0,10);
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
@@ -117,9 +129,9 @@ public class SoonMovieFragment extends Fragment {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                refreshLayout.setRefreshing(false);
                             }
                         });
-                        refreshLayout.setRefreshing(false);
                         return;
                     }
                     movieList.add(MovieUtil.Json2Movie(movieJson));
@@ -179,6 +191,16 @@ public class SoonMovieFragment extends Fragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                if (!NetUtil.checkNetState(getActivity())){
+                                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            refreshLayout.setRefreshing(false);
+                                        }
+                                    });
+                                    return;
+                                }
                                 String hotJson = HttpUtil.getSoonMovie(0,10);
                                 if (hotJson == null){   //返回为空，一般情况为被封IP
                                     return;
@@ -198,9 +220,9 @@ public class SoonMovieFragment extends Fragment {
                                             @Override
                                             public void run() {
                                                 adapter.notifyDataSetChanged();
+                                                refreshLayout.setRefreshing(false);
                                             }
                                         });
-                                        refreshLayout.setRefreshing(false);
                                         return;
                                     }
                                     count++;
@@ -240,6 +262,16 @@ public class SoonMovieFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (!NetUtil.checkNetState(getActivity())){
+                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    });
+                    return;
+                }
                 String hotJson = HttpUtil.getSoonMovie(start,4);  //上拉加载每次最多请求4条
                 if (hotJson == null){   //返回为空，一般情况为被封IP
                     return;
@@ -256,9 +288,9 @@ public class SoonMovieFragment extends Fragment {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                refreshLayout.setRefreshing(false);
                             }
                         });
-                        refreshLayout.setRefreshing(false);
                         return;
                     }
                     movieList.add(MovieUtil.Json2Movie(movieJson));

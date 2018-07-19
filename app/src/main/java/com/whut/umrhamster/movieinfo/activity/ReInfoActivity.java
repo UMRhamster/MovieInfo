@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.User;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 import com.whut.umrhamster.movieinfo.util.SPUtil;
 
 import java.util.List;
@@ -105,6 +106,10 @@ public class ReInfoActivity extends AppCompatActivity {
     }
 
     private void upDateInfo(){
+        if (!NetUtil.checkNetState(ReInfoActivity.this)){
+            Toast.makeText(ReInfoActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+            return;
+        }
         BmobQuery<User> userQuery = new BmobQuery<>();
         userQuery.addWhereEqualTo("name",SPUtil.loadData(ReInfoActivity.this,"user","name"));
         userQuery.findObjects(new FindListener<User>() {

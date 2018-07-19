@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +45,10 @@ public class WebViewActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
+        if (!NetUtil.checkNetState(WebViewActivity.this)){
+            Toast.makeText(WebViewActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
+            return;
+        }
         webView.loadUrl(url);
     }
 

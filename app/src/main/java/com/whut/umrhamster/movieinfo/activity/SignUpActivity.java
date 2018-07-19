@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.whut.umrhamster.movieinfo.R;
 import com.whut.umrhamster.movieinfo.model.User;
+import com.whut.umrhamster.movieinfo.util.NetUtil;
 
 import java.util.List;
 
@@ -71,6 +72,11 @@ public class SignUpActivity extends AppCompatActivity {
         if (!isSignUp){
             isSignUp = true;
             if (!localCheck(name,password,passwordAgain,nickname)){
+                isSignUp = false;
+                return;
+            }
+            if (!NetUtil.checkNetState(SignUpActivity.this)){
+                Toast.makeText(SignUpActivity.this,"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                 isSignUp = false;
                 return;
             }
