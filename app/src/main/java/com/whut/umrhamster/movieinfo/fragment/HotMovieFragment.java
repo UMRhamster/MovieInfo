@@ -100,7 +100,7 @@ public class HotMovieFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
     public void initData(){
-        Log.d("gettitlevelow","test");
+//        Log.d("gettitlevelow","test");
 //        movieList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
@@ -120,7 +120,12 @@ public class HotMovieFragment extends Fragment {
                         movieJson = HttpUtil.getMovieById(id);   //此处可能由于API访问限制，抛出异常
                     } catch (IOException e) {
                         e.printStackTrace();    //如果产生异常，则不能继续获取数据，直接刷新已经解析出的数据
-                        adapter.notifyDataSetChanged();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                         refreshLayout.setRefreshing(false);
                         return;
                     }
@@ -197,7 +202,12 @@ public class HotMovieFragment extends Fragment {
                                         movieJson = HttpUtil.getMovieById(id);
                                     } catch (IOException e) {
                                         e.printStackTrace();
-                                        adapter.notifyDataSetChanged();
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
                                         refreshLayout.setRefreshing(false);
                                         return;
                                     }
@@ -251,7 +261,12 @@ public class HotMovieFragment extends Fragment {
                         movieJson = HttpUtil.getMovieById(id);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        adapter.notifyDataSetChanged();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                         refreshLayout.setRefreshing(false);
                         return;
                     }

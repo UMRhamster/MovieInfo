@@ -113,7 +113,12 @@ public class SoonMovieFragment extends Fragment {
                         movieJson = HttpUtil.getMovieById(id);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        adapter.notifyDataSetChanged();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                         refreshLayout.setRefreshing(false);
                         return;
                     }
@@ -189,7 +194,12 @@ public class SoonMovieFragment extends Fragment {
                                         movieJson = HttpUtil.getMovieById(id);
                                     } catch (IOException e) {
                                         e.printStackTrace();
-                                        adapter.notifyDataSetChanged();
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
                                         refreshLayout.setRefreshing(false);
                                         return;
                                     }
@@ -242,7 +252,12 @@ public class SoonMovieFragment extends Fragment {
                         movieJson = HttpUtil.getMovieById(id);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        adapter.notifyDataSetChanged();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                         refreshLayout.setRefreshing(false);
                         return;
                     }
