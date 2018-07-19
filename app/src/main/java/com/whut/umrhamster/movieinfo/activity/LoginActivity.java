@@ -129,6 +129,13 @@ public class LoginActivity extends AppCompatActivity {
                             overridePendingTransition(R.anim.anim_fg_enter,R.anim.anim_fg_out);
                         }
                     });
+                }else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this,"登陆失败",Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
