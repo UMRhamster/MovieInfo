@@ -118,7 +118,10 @@ public class SignUpActivity extends AppCompatActivity {
         if (name.equals("") || password.equals("") || passwordAgain.equals("")){
             Toast.makeText(SignUpActivity.this,"用户名或密码不能为空",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (!(name.matches(pattern) && password.matches(pattern) && passwordAgain.matches(pattern))){
+        }else if (!password.equals(passwordAgain)){
+            Toast.makeText(SignUpActivity.this,"两次密码不一致",Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!(name.matches(pattern) && password.matches(pattern) && passwordAgain.matches(pattern))){
             Toast.makeText(SignUpActivity.this,"用户名或密码不合法",Toast.LENGTH_SHORT).show();
             return false;
         }

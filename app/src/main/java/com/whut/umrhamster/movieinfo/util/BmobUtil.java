@@ -14,35 +14,35 @@ import cn.bmob.v3.listener.CountListener;
  */
 
 public class BmobUtil {
-   static Handler handler=  new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Integer integer = (Integer) msg.obj;
-        }
-    };
-    public static void getReviewCountByMoviewId(String movieId){
-        int count = 0;
-        BmobQuery<Review> reviewQuery = new BmobQuery<>();
-        reviewQuery.addWhereEqualTo("movieId",movieId);
-        reviewQuery.count(Review.class, new CountListener() {
-            @Override
-            public void done(Integer integer, BmobException e) {
-                if (e == null){
-//                    callback(integer);
-                    Message msg = Message.obtain();
-                    msg.obj = integer;
-                    handler.sendMessage(msg);
-                }else {
-                    callback(0);
-                }
-            }
-        });
-    }
-
-    public static int callback(int count){
-
-        return count;
-
-    }
+//   static Handler handler=  new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            Integer integer = (Integer) msg.obj;
+//        }
+//    };
+//    public static void getReviewCountByMoviewId(String movieId){
+//        int count = 0;
+//        BmobQuery<Review> reviewQuery = new BmobQuery<>();
+//        reviewQuery.addWhereEqualTo("movieId",movieId);
+//        reviewQuery.count(Review.class, new CountListener() {
+//            @Override
+//            public void done(Integer integer, BmobException e) {
+//                if (e == null){
+////                    callback(integer);
+//                    Message msg = Message.obtain();
+//                    msg.obj = integer;
+//                    handler.sendMessage(msg);
+//                }else {
+//                    callback(0);
+//                }
+//            }
+//        });
+//    }
+//
+//    public static int callback(int count){
+//
+//        return count;
+//
+//    }
 }

@@ -101,10 +101,10 @@ public class SoonMovieFragment extends Fragment {
             @Override
             public void run() {
                 if (!NetUtil.checkNetState(getActivity())){
-                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                             refreshLayout.setRefreshing(false);
                         }
                     });
@@ -192,10 +192,10 @@ public class SoonMovieFragment extends Fragment {
                             @Override
                             public void run() {
                                 if (!NetUtil.checkNetState(getActivity())){
-                                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                                     handler.post(new Runnable() {
                                         @Override
                                         public void run() {
+                                            Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                                             refreshLayout.setRefreshing(false);
                                         }
                                     });
@@ -263,10 +263,10 @@ public class SoonMovieFragment extends Fragment {
             @Override
             public void run() {
                 if (!NetUtil.checkNetState(getActivity())){
-                    Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Toast.makeText(getActivity(),"网络连接不可用，请检查网络设置",Toast.LENGTH_SHORT).show();
                             refreshLayout.setRefreshing(false);
                         }
                     });
